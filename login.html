@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--Makes the page responsive-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+	<!--min jQuery source: https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
+	        Saved for offline access/testing.-->
+	<script src="jQuery.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="login.css">
+	
+	<!--Page head-->
+	
+	<head>
+		<title></title>
+	</head>
+	
+	<!--Body-->
+	
+	<body style=" margin:0cm 0cm 0cm 0cm;">
+		<!--Header banner-->
+		<div id="header">
+			<div id="banner2" class="banner">
+				Search for a restaurant:
+				<input type="text" id="searchbox" onkeypress="process_search(event)" placeholder="<Type a restaurant name here>" style="width:60%; height:20px;" />
+			</div>
+			<div id="loginBanner" class="banner" align="right">
+				Login | Help
+			</div>
+		</div>
+		
+		<br /><br /><br />
+		<!--Welcome text-->
+		<center><h1>Welcome to Restaurant Reserver! (placeholder name)</h1><br />
+		Please log in to begin reserving your meal. <br /></center>
+		
+		<br /><br /><br /><br /><br />
+		
+		<!--Login text-->
+		<div align="center" id="loginBox">
+			<!--Username-->
+			<br />Username: 
+			<input type="text" id="username" placeholder="<username>"/>
+			<!--Password-->
+			<br />Password: 
+			<input type="password" id="password" placeholder="<password>"/>
+			<br />
+			<button id="login">Login</button><button id="signup">Sign Up</button>
+		</div>
+		
+	</body>
+	<!--JavaScript for the header (should use on all pages)-->
+	<script src="headerbar.js"></script>
+	<!--JavaScript for the login page-->
+	<script src="login.js"></script>
+</html>

@@ -1,0 +1,20 @@
+Ideas:
+-Seat reservation app
+
+-Restaurant admins
+-Customer accounts
+-Wait lists
+-Reserve specific seats
+-One restaurant (for now)
+-Alert to request review. Or optionally, user can voluntarily enter review after seating time using system to reserve restaurant
+-Restauraunts can put up their menu on the app; potential customers can search for restaurants with certain dishes/cuisines
+-Restaurants assumed to have same layout (for now; can change later if we have time) nah
+-Register restaurant feature (details TBD); owners request admin to register restaurant. They submit image file containing general layout plus accommodation info.
+-Owner can upload restaurant info, register admins
+-Add /rid=<restaurant id> to end of URL to get restaurant with specific ID
+-Accessible seat option? I know we didn't discuss this but it might be something to add to our app if we have the time
+
+Pages required for phase 1:
+-Login page
+-list of restaurants (can select restaurants from here)
+-Restaurant canvas? We can google an image for our mockup

@@ -1,0 +1,22 @@
+/*
+This file contains the styling for index.html.
+*/
+
+div.banner{
+	margin: 0px;
+	padding: 0px;
+	width: 50%;
+	float: left;
+	height: 50px;
+	background-color: blue;
+	color: White;
+}
+
+#header{
+	position: fixed;
+	width:100%
+}
+
+input{
+	margin: 5px;
+}
