@@ -19,13 +19,17 @@
 	
 	<body style=" margin:0cm 0cm 0cm 0cm;" onresize="resizeSearchBar()">
 		<!--Header banner-->
+		<!--Auto resizing of header is handled in headerbar.js-->
+		<!--Styling for the elements in the header is handled in header.css-->
 		<div id="header" class="banner">
 			Search for a restaurant:
-			<input type="text" id="searchbox" onkeypress="process_search(event)" placeholder="<Type a restaurant name here>" style="width: 50%; calc(100%-200px); height:20px;" />
-			<div id="loginBanner" class="right">
-				Login | Help
+			<input type="text" id="searchbox" onkeypress="process_search(event)" placeholder="<Type a restaurant name here>"/>
+			<div id="loginbanner" class="right">
+				<a href="login.html" class="banner">Login</a> | <a href="help.html" class="banner">Help</a>
 			</div>
 		</div>
+		<!--Used to keep the fixed banner from ruining the styling of a page-->
+		<div id="antibanner"></div>
 		
 		<!--Search option sidebar-->
 		<div id="searchoptions">

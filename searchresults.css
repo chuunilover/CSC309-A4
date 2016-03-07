@@ -1,11 +1,10 @@
 /*
-This file contains the styling for index.html.
+This file contains the styling for searchresults.html.
 */
 
 #searchoptions{
 	position: fixed;
 	margin: 0px;
-	margin-top: 50px;
 	background-color: red;
 	width: 150px;
 	height: 100%;
