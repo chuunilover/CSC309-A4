@@ -7,13 +7,13 @@
 	<script src="jQuery.js"></script>
 	
 	<link rel="stylesheet" type="text/css" href="header.css">
-	<link rel="stylesheet" type="text/css" href="login.css">
+	<link rel="stylesheet" type="text/css" href="searchresults.css">
 	
 	<!--Page head-->
 	
 	<head>
 		<title></title>
-	</head>	
+	</head>
 	
 	<!--Body-->
 	
@@ -27,28 +27,24 @@
 			</div>
 		</div>
 		
-		<br /><br /><br />
-		<!--Welcome text-->
-		<center><h1>Welcome to Restaurant Reserver! (placeholder name)</h1><br />
-		Please log in to begin reserving your meal. <br /></center>
-		
-		<br /><br /><br /><br /><br />
-		
-		<!--Login text-->
-		<div align="center" id="loginBox">
-			<!--Username-->
-			<br />Username: 
-			<input type="text" id="username" placeholder="<username>"/>
-			<!--Password-->
-			<br />Password: 
-			<input type="password" id="password" placeholder="<password>"/>
-			<br />
-			<button id="login">Login</button><button id="signup">Sign Up</button>
+		<!--Search option sidebar-->
+		<div id="searchoptions">
+			<center> Search options: </center>
+			<div id="mincostdiv" class="costdiv">
+				Min cost:
+				<div class="right">
+					$ <input type="number" class="costoptions" maxlength="5" min="0" max="10000" width="50px" id="mincost"><br />
+				</div>
+			</div>
+			<div id="maxcostdiv" class="costdiv">
+				Max cost: 
+				<div class="right">
+					$ <input type="number" class="costoptions" maxlength="5" min="0" max="10000" width="50px" id="maxcost"><br />
+				</div>
+			</div>
 		</div>
-		
-	</body>
 	<!--JavaScript for the header (should use on all pages)-->
 	<script src="headerbar.js"></script>
 	<!--JavaScript for the login page-->
-	<script src="login.js"></script>
+	<script src="searchresults.js"></script>
 </html>
