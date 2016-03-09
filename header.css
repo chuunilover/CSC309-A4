@@ -1,12 +1,11 @@
 div.banner{
-	margin: 0px;
-	padding: 0px;
-	width: 50%;
-	float: left;
-	height: 40px;
-	background-color: blue;
-	color: white;
-	border: 5px solid blue;
+	text-align: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color: #D0D0D0;
+	border-bottom: 1px solid #3399FF;
 }
 
 #antibanner{
