@@ -7,9 +7,10 @@
     background-color: #00CCFF;
     font-family: "Avenir", sans-serif;
     font-size: 16px;
-    text-align: center;
+    text-align: left;
 	border: 2px solid #3399FF;
 	border-radius: 25px;
+	padding: 10px 10px 10px 10px;
 }
 
 #wrapText {
@@ -17,4 +18,16 @@
 	margin: 10px;
 	width:304px;
 	height:228px;
+}
+
+#reviewStyle {
+	border: 2px solid #33FF00;
+	border-radius: 25px;
+	padding: 10px 10px 10px 10px;
+}
+
+#individReviews {
+	border: 2px solid #CC6600;
+	border-radius: 25px;
+	padding: 10px 10px 10px 10px;
 }
