@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--Makes the page responsive-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+	<!--min jQuery source: https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
+	        Saved for offline access/testing.-->
+	<script src="jQuery.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="header.css">
+	<link rel="stylesheet" type="text/css" href="restaurantinfo.css">
+	
+	<!--Page head-->
+	
+	<head>
+		<title>Search for a restaurant!</title>
+	</head>
+	
+	<!--Body-->
+	
+	<body style=" margin:0cm 0cm 0cm 0cm;" onresize="resizeSearchBar()">
+		<!--Header banner-->
+		<!--Auto resizing of header is handled in headerbar.js-->
+		<!--Styling for the elements in the header is handled in header.css-->
+		<div id="header" class="banner">
+			Search for a restaurant:
+			<input type="text" id="searchbox" onkeypress="process_search(event)" placeholder="<Type a restaurant name here>"/>
+			<div id="loginbanner" class="right">
+				<a href="login.html" class="banner">Login</a> | <a href="help.html" class="banner">Help</a>
+			</div>
+		</div>
+		<!--Used to keep the fixed banner from ruining the styling of a page-->
+		<div id="antibanner"></div>
+		
+		<div id="results">
+			<h1> Yum Yum's</h1>
+			<img id="wrapText" src="dim-sum.jpg">
+			<b>About us: </b>
+			Are you looking for great flavour without breaking the bank? Then come to Yum Yum's! Here at Yum Yum's, we serve the finest Chinese food on the University of Toronto campus, all while keeping the prices affordable. Are you a UofT student? We offer various discounts to students!
+			<br /> <br />
+			Unlike a typical Western restaurant, Yum Yum's serves dishes to the table, rather than the individual, meaning that you can share and try as much food as you like! We even offer take-out. Just let us know what and roughly when you want your food, and it will be ready for you!
+			<br /><br />
+			<a href="menu.jpg">Click here to view the menu. (should show an image or pdf of the menu)</a>
+			<br /><br />
+			Additional info:<br />
+			Phone number: (416) 322-2222<br />
+			E-mail: food@yumyums.com <br />
+			Address: 22 St. George Streeet, Toronto, ON
+			<br /><br />
+            
+			<div id="table">
+				<img src="restaurant_floor_plan.jpg">
+			</div>
+		</div>
+		
+ 
+	<!--JavaScript for the header (should use on all pages)-->
+	<script src="headerbar.js"></script>
+</html>
