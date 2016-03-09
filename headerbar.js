@@ -1,6 +1,6 @@
 window.onload = function() {
-	$("#searchbox").width($(window).width() - 250);
-	$("#header").width($(window).width() - 10);
+	$("#searchbox").width($(window).width() - 350);
+	$("#header").width($(window).width());
 }
 
 function process_search(event){
@@ -11,6 +11,6 @@ function process_search(event){
 }
 
 function resizeSearchBar(){
-	$("#searchbox").width($(window).width() - 250);
-	$("#header").width($(window).width() - 10);
+	$("#searchbox").width($(window).width() - 350);
+	$("#header").width($(window).width());
 }
