@@ -11,3 +11,10 @@
 	border: 2px solid #3399FF;
 	border-radius: 25px;
 }
+
+#wrapText {
+	float: left;
+	margin: 10px;
+	width:304px;
+	height:228px;
+}
