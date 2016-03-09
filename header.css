@@ -5,7 +5,7 @@ div.banner{
 	float: left;
 	height: 40px;
 	background-color: blue;
-	color: White;
+	color: white;
 	border: 5px solid blue;
 }
 
@@ -35,6 +35,14 @@ a.banner:link{
 	color: white;
 }
 
-a.visited:link{
+a.banner:visited{
+	color: red;
+}
+
+a.banner:active{
 	color:purple;
+}
+
+a.banner:hover{
+	color:green;
 }

@@ -6,7 +6,7 @@ window.onload = function() {
 function process_search(event){
 	if(event.keyCode == 13){
 		alert("Searching for restaurants with \"" + $("#searchbox").val() + "\"");
-		window.open("searchresults.html", "_self")
+		window.open("searchresults.html?" + $("#searchbox").val() , "_self");
 	}
 }
 

@@ -1,0 +1,11 @@
+/* CSS for the restaurant info */
+
+#results{
+	background-color: red;
+	/* image credits: https://www.helpgoabroad.com/blog/decoding-dim-sum/ */
+    background-image: url("dim-sum.jpg");
+	height: 600px;
+	width: 100%;
+	margin: 0px;
+	color: yellow;
+}
