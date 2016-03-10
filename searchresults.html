@@ -33,7 +33,7 @@
 		
 		<!--Search option sidebar-->
 		<div id="searchoptions">
-			<center> Search options: </center>
+			<center>Search options: </center>
 			<div id="mincostdiv" class="costdiv">
 				Min cost:
 				<div class="right">
@@ -48,11 +48,25 @@
 			</div>
 		</div>
 		
-		<div id="results" style="width: calc(100%-150px); height:660px; background-color: yellow; margin-left: 150px; border: 20px solid yellow;">
+		<div id="results">
 			<h1>Restaurants:</h1><br />
-			<h3><a href="restaurantinfo.html">Yum Yum's</a></h3>
-			Not just another Chinese restaurant!<br />
-			Tags: #Chinese, #UofT
+				<div id="yumyum">
+					<h3>Yum Yum's</h3>
+					<img src="dim-sum.jpg">
+					<button onclick="location.href='restaurantinfo.html'">View Information</button>
+					<button onclick="location.href='bookseat.html'">Book Seat</button><br /><br />
+					Not just another Chinese restaurant!<br />
+					Tags: #Chinese, #UofT
+				</div>
+				<div id="bestpizza">
+					<h3>The Best Pizza</a></h3>
+					<button onclick="location.href='bestpizza.html'">View Information</button>
+					<button onclick="location.href='bookseat.html'">Book Seat</button><br /><br />
+					Not just another Chinese restaurant!<br />
+					Tags: #Chinese, #UofT
+					Not just another Chinese restaurant!<br />
+					Tags: #Chinese, #UofT
+				</div>
 		</div>
 	<!--JavaScript for the header (should use on all pages)-->
 	<script src="headerbar.js"></script>
