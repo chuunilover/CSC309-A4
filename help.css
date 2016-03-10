@@ -1,3 +1,7 @@
+body{
+    font-family: sans-serif;
+}
+
 #faq{
     width: calc(100% - 40px);
 	height: 1500px;
