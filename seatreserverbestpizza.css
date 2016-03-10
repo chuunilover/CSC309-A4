@@ -1,0 +1,49 @@
+/* CSS for the restaurant info */
+
+body{
+	background-image: url("pizza.png");
+}
+
+#results{
+	/* image credits: https://www.helpgoabroad.com/blog/decoding-dim-sum/ */
+   /* background-image: url("dim-sum.jpg");*/
+	color: #FFFFFF;
+    background-color: #00CCFF;
+    font-family: "Avenir", sans-serif;
+    font-size: 16px;
+    text-align: left;
+	border: 2px solid #3399FF;
+	border-radius: 25px;
+	padding: 10px 10px 10px 10px;
+	display: table;
+	width: calc(100% - 25px);
+}
+
+#wrapText {
+	float: left;
+	margin: 10px;
+	width:304px;
+	height:228px;
+}
+
+#reviewStyle {
+	border: 2px solid #33FF00;
+	border-radius: 25px;
+	width: calc(50% - 30px);
+	padding: 10px 10px 10px 10px;
+	overflow: hidden;
+	float: right;
+}
+
+#floorplan{
+	width: 50%;
+	min-height: 100%;
+	float: left;
+	overflow: hidden;
+}
+
+#individReviews {
+	border: 2px solid #CC6600;
+	border-radius: 25px;
+	padding: 10px 10px 10px 10px;
+}

@@ -68,3 +68,8 @@ h1{
 	border-radius: 25px;
 	background-color: #99FFCC;
 }
+
+#bestpizza img {
+	width:100px;
+	height:100px;
+}

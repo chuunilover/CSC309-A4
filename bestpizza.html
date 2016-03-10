@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--Makes the page responsive-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+	<!--min jQuery source: https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
+	        Saved for offline access/testing.-->
+	<script src="jQuery.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="header.css">
+	<link rel="stylesheet" type="text/css" href="restaurantinfo.css">
+	
+	<!--Page head-->
+	
+	<head>
+		<title>Search for a restaurant!</title>
+	</head>
+	
+	<!--Body-->
+	
+	<body style=" margin:0cm 0cm 0cm 0cm;" onresize="resizeSearchBar()">
+		<!--Header banner-->
+		<!--Auto resizing of header is handled in headerbar.js-->
+		<!--Styling for the elements in the header is handled in header.css-->
+		<div id="header" class="banner">
+			Search for a restaurant:
+			<input type="text" id="searchbox" onkeypress="process_search(event)" placeholder="<Type a restaurant name here>"/>
+			<div id="loginbanner" class="right">
+				<a href="login.html" class="banner">Login</a> | <a href="help.html" class="banner">Help</a>
+			</div>
+		</div>
+		<!--Used to keep the fixed banner from ruining the styling of a page-->
+		<div id="antibanner"></div>
+		
+		<div id="results">
+			<h1>The Best Pizza</h1>
+			<img id="wrapText" src="pizza.png">
+			<b>About us: </b>
+			Simple: we have great pizza and its cheap!
+			<br /> <br />
+			Take-out and eat-in!
+			<br /><br />
+			<a href="menu.jpg">Click here to view the menu. (should show an image or pdf of the menu)</a>
+			<br /><br />
+			Additional info:<br />
+			Phone number: (416) 234-5678<br />
+			E-mail: pizza@hebestpizza.com <br />
+			Address: 37 St. George Streeet, Toronto, ON
+			<br /><br />
+			<div id="reviewStyle">
+				<h2>Reviews:</h2>
+				<div id="individReviews">
+					Posted by: William Wilson (@wwilson)<br />
+					Hate it. Not good.
+					<br /> <br />
+					Rating: 1/5<br />
+					5 out of 6 people found this review helpful.
+				</div>
+				<div id="individReviews">
+					Posted by: Edd Moore (@mooree)<br />
+					Decent, but not great.
+					<br /> <br />
+					Rating: 2/5<br />
+					2 out of 7 people found this review helpful.
+				</div>
+			</div>
+		</div>
+		
+ 
+	<!--JavaScript for the header (should use on all pages)-->
+	<script src="headerbar.js"></script>
+</html>
