@@ -3,7 +3,7 @@ This file contains the styling for searchresults.html.
 */
 
 body{
-    font-family: sans-serif;
+    font-family: "Avenir", sans-serif;
     
 }
 
@@ -11,10 +11,14 @@ body{
 	position: fixed;
 	margin: 0px;
 	margin-top: 10px;
-	background-color: red;
+	background-color: #99FFCC;
 	width: 150px;
 	height: 100%;
-	color: white;
+	color: blue;
+	padding: 10px 10px 10px 10px;
+	border: 2px solid #3399FF;
+	border-radius: 25px;
+	margin-top: 20px;
 }
 
 input.costoptions{
@@ -32,4 +36,35 @@ div.costdiv{
 
 h1{
 	margin:0px;
+}
+
+#results {
+	margin-left: 150px;
+	padding: 10px 10px 10px 10px;
+	border: 2px solid #3399FF;
+	border-radius: 25px;
+	margin-top: 20px;
+	margin: 20px;
+	margin-left: 200px
+}
+
+#yumyum {
+	margin-top: 10px;
+	padding: 10px 10px 10px 10px;
+	border: 2px solid #3399FF;
+	border-radius: 25px;
+	background-color: #99FFCC;
+}
+
+#yumyum img {
+	width:100px;
+	height:100px;
+}
+
+#bestpizza {
+	margin-top: 10px;
+	padding: 10px 10px 10px 10px;
+	border: 2px solid #3399FF;
+	border-radius: 25px;
+	background-color: #99FFCC;
 }
