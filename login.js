@@ -1,7 +1,6 @@
 $("#login").click(function(){
 	var inputtedUsername = document.getElementById("username").value;
 	var inputtedPassword = document.getElementById("password").value;
-	var confirmedPassword = document.getElementById("confirmpassword").value;
 	if (inputtedUsername == ""){
 		alert("Please input a username")
 	}
@@ -9,9 +8,23 @@ $("#login").click(function(){
 		alert("Please type in your password");
 	}
 	else{
-		alert("username=" +
-        inputtedUsername + 
-        " and password=" + 
-        inputtedPassword);
+		requestLogin(inputtedUsername, inputtedPassword);
 	}
 })
+
+//Request a login. Requests involve appending a specific query to the end of the web address.
+function requestLogin (username, password) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4 && xhttp.status == 200){
+			alert(xhttp.responseText);
+		}
+	};
+	try{
+		xhttp.open("GET", "http://localhost:3000/login/" + username + "/" + password, true);
+		xhttp.send(null);
+	}
+	catch(e){
+		alert(e);
+	}
+}

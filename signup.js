@@ -20,10 +20,6 @@ $("#signup").click(function(){
 		alert("The two passwords don't match.");
 	}
 	else{
-		alert("username=" +
-        inputtedUsername + 
-        " and password=" + 
-        inputtedPassword);
 		requestSignup(inputtedUsername, inputtedName, inputtedEmail, inputtedPassword);
 	}
 })

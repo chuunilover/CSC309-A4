@@ -19,8 +19,7 @@ app.get('/signup/:username/:name/:email/:password', function(req, res) {
 	var name = req.params.name;
 	var password = req.params.password;
 	var email = req.params.email;
-	console.log('Searching for ' + username);
-	
+	console.log('Searching for ' + email);
 	User.count({ 'username': username }, function (err, count) {
 		if (err) {
 			console.log("Error retrieving user!");
@@ -28,21 +27,50 @@ app.get('/signup/:username/:name/:email/:password', function(req, res) {
 			return handleError(err);
 		}
 		if(count > 0) {
-			console.log('User exists.');
-			res.send("True");
+			console.log('Email exists.');
+			res.send("That username is already associated with an account!");
 		}
 		else{
 			console.log('User does not exist. Creating new account.');
-			res.send("False");
+			var userData = {
+				"username": username,
+				"name": name,
+				"password": password,
+				"email": email
+				//_id: new ObjectID()
+			};
+
+			var newUser = new User(userData);
+			newUser.save(function(error, data){
+				if(error){
+					res.send("Error creating new user");
+				}
+				else{
+					res.send("User created!");
+				}
+			});
+			//res.send("User created!");
 		}
 	})
-	
 });	
 
 app.get('/login/:username/:password', function(req, res) {
 	var username = req.params.username;
-	var name = req.params.name;
 	var password = req.params.password;
+	console.log("Logging into account '" + username + "' with password '" + password + "'");
+	User.findOne({ 'username': username }, 'username password', function (err, users) {
+		if (err){
+			return handleError(err);
+		}
+		else if (users === null || users.password != password){
+			console.log("Rejected login credentials.");
+			res.send("You inputted invalid login credentials.");
+			return;
+		}
+		else{
+			res.send("Welcome, " + username);
+		}
+	})
 });
 
 app.get('/search/:query', function(req, res) {
@@ -62,6 +90,9 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
   console.log('Connected to MongoDB');
 })
+
+//check if user exists
+
 
 app.listen(3000);
 
