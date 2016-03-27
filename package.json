@@ -1,0 +1,30 @@
+{
+  "name": "restaurantreserver",
+  "version": "1.0.0",
+  "description": "A web service which simplifies the process of reserving seats of a restaurant",
+  "main": "server.js",
+  "dependencies": {
+    "mongoose": "^4.4.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chuunilover/CSC309-A4.git"
+  },
+  "keywords": [
+    "HTML",
+    "CSS",
+    "Javascript",
+    "Node.js"
+  ],
+  "author": "Charles Alexander Tse <charles.alexander.tse@rogers.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chuunilover/CSC309-A4/issues"
+  },
+  "homepage": "https://github.com/chuunilover/CSC309-A4#readme"
+}

@@ -1,6 +1,7 @@
 $("#login").click(function(){
 	var inputtedUsername = document.getElementById("username").value;
-	var inputtedPassword = document.getElementById("password").value
+	var inputtedPassword = document.getElementById("password").value;
+	var confirmedPassword = document.getElementById("confirmpassword").value;
 	if (inputtedUsername == ""){
 		alert("Please input a username")
 	}
