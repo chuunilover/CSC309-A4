@@ -52,8 +52,9 @@ app.get('/signup/:username/:name/:email/:password', function(req, res) {
 			//res.send("User created!");
 		}
 	})
-});	
+});
 
+//login request
 app.get('/login/:username/:password', function(req, res) {
 	var username = req.params.username;
 	var password = req.params.password;
@@ -73,9 +74,38 @@ app.get('/login/:username/:password', function(req, res) {
 	})
 });
 
-app.get('/search/:query', function(req, res) {
-	var query = req.params.query;
+app.get('/search/:keywords', function(req, res) {
+	var tags = req.params.keywords.split(/\s/);
+	for(i = 0; i < tags.length; i++){
+		console.log(tags[i]);
+	}
 });
+
+app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(req, res){
+	var name = req.params.name;
+	var location = req.params.location;
+	var description = req.params.description;
+	var tags = req.params.tags;
+	var hours = req.params.hours;
+	var restaurantData = {
+		"name": name,
+		"location": location,
+		"description": description,
+		"tags": tags,
+		"hours": hours
+	};
+
+	
+	var newRestaurant = new User(restaurantData);
+	newRestaurant.save(function(error, data){
+		if(error){
+			res.send("Error creating new restaurant");
+		}
+		else{
+			res.send("Restaurant logged!");
+		}
+	});
+})
 
 
 //To connect to MongoDB's  database
@@ -99,11 +129,11 @@ app.listen(3000);
 
 var RestaurantSchema = mongoose.Schema({
 	name: String,
-	Location: String,
-	Description: String,
+	location: String,
+	description: String,
 	tags: String,
-	Hours: String,
-	restaurantid: Number
+	hours: String//,
+	//restaurantid: Number
 });
 
 var UserSchema = mongoose.Schema({
@@ -111,6 +141,11 @@ var UserSchema = mongoose.Schema({
 	name: String,
 	email: String,
 	password: String
+});
+
+var RestaurantManagerPerms = mongoose.Schema({
+	restaurant_id: number,
+	owner: String
 });
 
 var Restaurant = mongoose.model('Restaurants', RestaurantSchema);

@@ -12,6 +12,10 @@ $("#login").click(function(){
 	}
 })
 
+$("#signup").click(function(){
+	window.open("signup.html", "_self");
+});
+
 //Request a login. Requests involve appending a specific query to the end of the web address.
 function requestLogin (username, password) {
 	var xhttp = new XMLHttpRequest();
