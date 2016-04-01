@@ -46,9 +46,9 @@
             
         <!--READ FROM THE SERVER-->
         <h3 class="restaurant">Restaurant Name</h3>
+             
             
-            
-        <form id="submit_review" method="post" action="/submit">
+        <form role="form" id="submit_review" method="post" action="/submit">
             
             <!--RATING-->
             <div class="rating">
@@ -58,21 +58,20 @@
             <span><input type="radio" name="rating" id="str2" value="2"><label for="str2"></label></span>
             <span><input type="radio" name="rating" id="str1" value="1"><label for="str1"></label></span>
             </div>
-                
 
+            <br>
+            <br>
+            
             <!-- TEXT BOX -->
-            <br>
-            <br>
-            <div class="textbox">
-                
-            <!--FIX TO SHOW MULTIPLE LINES-->
-            <input type="text" id="text" name="review_text" maxlength="100"/>
+            <div class="textbox">    
+                <textarea class="form-control" rows="5" id="text" name="review_text"></textarea>
             </div>
+            
             <br>
 
             <!--SUBMIT BUTTON-->
             <div class="button">
-            <button type="submit">Submit</button>
+            <button type="submit" class="btn btn-default">Submit</button>
             
             </div>
             
