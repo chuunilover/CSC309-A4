@@ -170,11 +170,12 @@ app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(r
 	});
 });
 
+//Check which seats are free at this time and restaurant.
 app.get('/restaurant/seatinfo/:restaurantID/:time', function(req, res){
 	var time = new Date(parseInt(req.params.time));
 	var restaurantID = mongoose.mongo.ObjectID(req.params.restaurantID);
-	console.log(time);
-	Reservation.find({_id: restaurantID}, 'seatID time', function (err, rest) {
+	console.log(req.params.restaurantID);
+	Reservation.find({restaurant: req.params.restaurantID}, 'seatID time', function (err, rest) {
 		if (err){
 			//return handleError(err);
 			res.send(err);
@@ -182,11 +183,12 @@ app.get('/restaurant/seatinfo/:restaurantID/:time', function(req, res){
 		}
 		var seatsFree = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 		for (i = 0; i < rest.length; i++){
-			var timeDif = abs(rest[i].time - time);
+			var timeDif = Math.abs(rest[i].time.getMilliseconds() - time);
+			console.log(timeDif);
 			if(timeDif < (1000*60*90)){
-				var idxToRemove = getIndexOf(seatsFree, i.seatID);
+				var idxToRemove = getIndexOf(seatsFree, rest[i].seatID);
 				if(idxToRemove != -1){
-					array.splice(idx_to_remove, 1);
+					seatsFree.splice(idxToRemove, 1);
 				}
 			}
 		}
@@ -194,27 +196,28 @@ app.get('/restaurant/seatinfo/:restaurantID/:time', function(req, res){
 	});
 });
 
+//Reserve a seat.
 app.get('/restaurant/reserve/:restaurantID/:seatID/:time', function(req, res){
 	var reservationData = {
-		"restaurantID": mongoose.mongo.ObjectID(req.params.restaurantID),
-		"seatID": parseInt(req.params.seatID),
-		"time": new Date(parseInt(time))
+		"restaurant": req.params.restaurantID,
+		"seatID": req.params.seatID,
+		"time": new Date(parseInt(req.params.time))
 		//_id: new ObjectID()
 	};
 
 	var newReservation = new Reservation(reservationData);
-	newUser.save(function(error, data){
+	newReservation.save(function(error, data){
 		if(error){
-			res.send("Error creating new user");
+			res.send("Error creating new reservation.");
 		}
 		else{
-			res.send("User created!");
+			res.send("Reservation created!");
 		}
 	});
 });
 
 function getIndexOf(array, value){
-	for (var i in value){
+	for (var i in array){
 		if (array[i] == value){
 			return i;
 		}
@@ -296,7 +299,7 @@ var ReviewSchema = mongoose.Schema({
 });
 
 var ReservationSchema = mongoose.Schema({
-	restaurant: Number,
+	restaurant: String,
 	seatID: Number,
 	time: Date
 });
