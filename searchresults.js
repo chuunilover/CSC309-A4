@@ -3,26 +3,32 @@ var query = $(location).attr('href').match(search_terms)[0]
 requestSearch(query);
 
 
+
 function requestSearch (keywords) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (xhttp.readyState == 4 && xhttp.status == 200){
-			var users = JSON.parse('[' + xhttp.responseText + ']');
-			for (var i in users){
-				alert(JSON.stringify(users[i]));
+			var restaurants = JSON.parse('[' + xhttp.responseText + ']');
+			for (var i in restaurants){
+				alert(JSON.stringify(restaurants[i]));
 			}
+			updateResults(restaurants)
+		}
+		if (xhttp.readyState == 4 && xhttp.status == 404){
+			alert("No search terms entered.");
 		}
 	};
 	try{
 		xhttp.open("GET", "http://localhost:3000/search/" + query, true);
-		//xhttp.open("POST", "search", true);
-		//xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		//xhttp.setRequestHeader("Connection", "close");
-		//alert('search=' + query)
 		xhttp.send(null);
-		//xhttp.send('search=' + query + '&q=b');
 	}
 	catch(e){
 		alert(e);
+	}
+}
+
+function updateResults (results){
+	if (results.length == 0){
+		alert("No restaurants have been found matching your criteria.")
 	}
 }
