@@ -112,17 +112,21 @@ app.get('/search/:keywords', function(req, res) {
 		console.log(tags[i]);
 	}
 	var restaurantList = [];
-	Restaurant.find({}, 'name tags', function (err, rest) {
+	Restaurant.find({}, 'name location description tags hours seats', function (err, rest) {
 		if (err){
 			return handleError(err);
 		}
+		var results = [];
 		for (i = 0; i < rest.length; i++){
 			var tag_list = rest[i].tags.split(/\s/);
 			if(rest[i].name == req.params.keywords || getTags(tags, tag_list)){
 				console.log(rest[i].name);
 				console.log(JSON.stringify(tag_list));
+				results.push(JSON.stringify(rest));
 			}
 		}
+		console.log(results.toString())
+		res.send(results.toString())
 	})
 });
 
