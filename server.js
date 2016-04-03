@@ -105,6 +105,7 @@ app.get('/review/:text/:username/:restID', function(req, res) {
 	})
 });*/
 
+//Search for restaurant with name = keywords, or contains matching tags.
 app.get('/search/:keywords', function(req, res) {
 	var tags = req.params.keywords.split(/\s/);
 	for(i = 0; i < tags.length; i++){
@@ -231,6 +232,22 @@ app.get('/addAdmin/:admin/:restID', function(req, res){
 	var restaurantID = req.params.restID;
 });
 
+app.get('/user/:userID', function(req, res){
+	console.log("getting user " + req.params.userID);
+	User.findOne({ '_id': mongoose.mongo.ObjectID(req.params.userID)}, 'username password', function (err, user) {
+		if (err){
+			return handleError(err);
+		}
+		else if (user === null || users.password != password){
+			console.log("No such user.");
+			res.send("No such user.");
+			return;
+		}
+		else{
+			res.send(JSON.stringify(user));
+		}
+	})
+}
 
 //To connect to MongoDB's  database
 mongoose.connect('mongodb://localhost', {
