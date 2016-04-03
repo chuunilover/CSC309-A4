@@ -12,7 +12,12 @@ function requestSearch (keywords) {
 	};
 	try{
 		xhttp.open("GET", "http://localhost:3000/search/" + query, true);
+		//xhttp.open("POST", "search", true);
+		//xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		//xhttp.setRequestHeader("Connection", "close");
+		//alert('search=' + query)
 		xhttp.send(null);
+		//xhttp.send('search=' + query + '&q=b');
 	}
 	catch(e){
 		alert(e);

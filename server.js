@@ -1,8 +1,13 @@
 var mongoose = require('mongoose');
 var express = require('express');
+var fs = require('fs');
 var app = express();
 
 app.use(express.static(__dirname));
+
+/**********************************************************************************
+ALL GET REQUESTS ARE PROCESSED BELOW.
+**********************************************************************************/
 
 /*
 By default, / should return the login page.
@@ -10,6 +15,11 @@ By default, / should return the login page.
 app.get('/', function(req, res) {
 	res.sendFile(__dirname + "/login.html");
 });
+
+//Experimenting with post..
+app.post('/search', function(req, res){
+	console.log(req.query);
+})
 
 /*
 Check if username is taken, if true return error else add entry to users database.
@@ -74,13 +84,60 @@ app.get('/login/:username/:password', function(req, res) {
 	})
 });
 
+/*
+app.get('/review/:text/:username/:restID', function(req, res) {
+	var tags = req.params.keywords.split(/\s/);
+	for(i = 0; i < tags.length; i++){
+		console.log(tags[i]);
+	}
+	var restaurantList = [];
+	Restaurant.find({}, 'name tags', function (err, rest) {
+		if (err){
+			return handleError(err);
+		}
+		for (i = 0; i < rest.length; i++){
+			var tag_list = rest[i].tags.split(/\s/);
+			if(rest[i].name == req.params.keywords || getTags(tags, tag_list)){
+				console.log(rest[i].name);
+				console.log(JSON.stringify(tag_list));
+			}
+		}
+	})
+});*/
+
 app.get('/search/:keywords', function(req, res) {
 	var tags = req.params.keywords.split(/\s/);
 	for(i = 0; i < tags.length; i++){
 		console.log(tags[i]);
 	}
+	var restaurantList = [];
+	Restaurant.find({}, 'name tags', function (err, rest) {
+		if (err){
+			return handleError(err);
+		}
+		for (i = 0; i < rest.length; i++){
+			var tag_list = rest[i].tags.split(/\s/);
+			if(rest[i].name == req.params.keywords || getTags(tags, tag_list)){
+				console.log(rest[i].name);
+				console.log(JSON.stringify(tag_list));
+			}
+		}
+	})
 });
 
+
+function getTags(searchQuery, tagList){
+	for (var idx in searchQuery){
+		for (var ind in tagList){
+			if (tagList[ind] == searchQuery[idx]){
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+//localhost:3000/restaurants/add/yum/home/swagger/food/never
 app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(req, res){
 	var name = req.params.name;
 	var location = req.params.location;
@@ -92,20 +149,87 @@ app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(r
 		"location": location,
 		"description": description,
 		"tags": tags,
-		"hours": hours
+		"hours": hours,
+		"seats": [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,4 ]
 	};
 
 	
-	var newRestaurant = new User(restaurantData);
+	var newRestaurant = new Restaurant(restaurantData);
 	newRestaurant.save(function(error, data){
 		if(error){
+			console.log("Failed to make restaurant");
 			res.send("Error creating new restaurant");
 		}
 		else{
+			console.log("Created new restaurant!")
 			res.send("Restaurant logged!");
 		}
 	});
 })
+
+app.get('/restaurant/seatinfo/:restaurantID/:time', function(req, res){
+	var time = new Date(parseInt(req.params.time));
+	var restaurantID = mongoose.mongo.ObjectID(req.params.restaurantID);
+	console.log(time);
+	Reservation.find({_id: restaurantID}, 'seatID time', function (err, rest) {
+		if (err){
+			//return handleError(err);
+			res.send(err);
+			return;
+		}
+		var seatsFree = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+		for (i = 0; i < rest.length; i++){
+			var timeDif = abs(rest[i].time - time);
+			if(timeDif < (1000*60*90)){
+				var idxToRemove = getIndexOf(seatsFree, i.seatID);
+				if(idxToRemove != -1){
+					array.splice(idx_to_remove, 1);
+				}
+			}
+		}
+		res.send(seatsFree.toString());
+	});
+});
+
+app.get('/restaurant/reserve/:restaurantID/:seatID/:time', function(req, res){
+	var reservationData = {
+		"restaurantID": mongoose.mongo.ObjectID(req.params.restaurantID),
+		"seatID": parseInt(req.params.seatID),
+		"time": new Date(parseInt(time))
+		//_id: new ObjectID()
+	};
+
+	var newReservation = new Reservation(reservationData);
+	newUser.save(function(error, data){
+		if(error){
+			res.send("Error creating new user");
+		}
+		else{
+			res.send("User created!");
+		}
+	});
+});
+
+function getIndexOf(array, value){
+	for (var i in value){
+		if (array[i] == value){
+			return i;
+		}
+	}
+	return -1;
+}
+
+/*
+app.get('/reserve/:time/:seatID/:restaurantID', function(req, res){
+	//var time = 
+	var seatID = 
+}
+*/
+
+app.get('/addAdmin/:admin/:restID', function(req, res){
+	var adminUsername = req.params.admin;
+	var restaurantID = req.params.restID;
+});
 
 
 //To connect to MongoDB's  database
@@ -121,19 +245,16 @@ db.once('open', function callback () {
   console.log('Connected to MongoDB');
 })
 
-//check if user exists
-
-
-app.listen(3000);
-
-
+//Database schemae
 var RestaurantSchema = mongoose.Schema({
 	name: String,
 	location: String,
 	description: String,
 	tags: String,
-	hours: String//,
-	//restaurantid: Number
+	hours: String,
+	//The seats are uniquely id'd by their position in the array.
+	//The number of people that this particular seat can accomodate is stored in the array.
+	seats: [Number],
 });
 
 var UserSchema = mongoose.Schema({
@@ -144,9 +265,29 @@ var UserSchema = mongoose.Schema({
 });
 
 var RestaurantManagerPerms = mongoose.Schema({
-	restaurant_id: number,
+	restaurant_id: Number,
 	owner: String
+});
+
+var ReviewSchema = mongoose.Schema({
+	text: String,
+	author: String,
+	name: String,
+	restaurant: Number
+});
+
+var ReservationSchema = mongoose.Schema({
+	restaurant: Number,
+	seatID: Number,
+	time: Date
 });
 
 var Restaurant = mongoose.model('Restaurants', RestaurantSchema);
 var User = mongoose.model('Users', UserSchema);
+var Review = mongoose.model('Reviews', ReviewSchema);
+var Reservation = mongoose.model('Reservations', ReservationSchema);
+
+
+//check if user exists
+
+app.listen(3000);
