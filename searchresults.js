@@ -7,7 +7,10 @@ function requestSearch (keywords) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (xhttp.readyState == 4 && xhttp.status == 200){
-			alert(xhttp.responseText);
+			var users = JSON.parse('[' + xhttp.responseText + ']');
+			for (var i in users){
+				alert(JSON.stringify(users[i]));
+			}
 		}
 	};
 	try{

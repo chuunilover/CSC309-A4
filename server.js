@@ -108,9 +108,7 @@ app.get('/review/:text/:username/:restID', function(req, res) {
 //Search for restaurant with name = keywords, or contains matching tags.
 app.get('/search/:keywords', function(req, res) {
 	var tags = req.params.keywords.split(/\s/);
-	for(i = 0; i < tags.length; i++){
-		console.log(tags[i]);
-	}
+	console.log("Searching for " + req.params.keywords + "...");
 	var restaurantList = [];
 	Restaurant.find({}, 'name location description tags hours seats', function (err, rest) {
 		if (err){
@@ -120,9 +118,7 @@ app.get('/search/:keywords', function(req, res) {
 		for (i = 0; i < rest.length; i++){
 			var tag_list = rest[i].tags.split(/\s/);
 			if(rest[i].name == req.params.keywords || getTags(tags, tag_list)){
-				console.log(rest[i].name);
-				console.log(JSON.stringify(tag_list));
-				results.push(JSON.stringify(rest));
+				results.push(JSON.stringify(rest[i]));
 			}
 		}
 		console.log(results.toString())
@@ -158,6 +154,7 @@ app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(r
 		"seats": [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,4 ]
 	};
 
+	console.log("added a restaurant...");
 	
 	var newRestaurant = new Restaurant(restaurantData);
 	newRestaurant.save(function(error, data){
@@ -170,7 +167,7 @@ app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(r
 			res.send("Restaurant logged!");
 		}
 	});
-})
+});
 
 app.get('/restaurant/seatinfo/:restaurantID/:time', function(req, res){
 	var time = new Date(parseInt(req.params.time));
