@@ -247,7 +247,7 @@ app.get('/user/:userID', function(req, res){
 			res.send(JSON.stringify(user));
 		}
 	})
-}
+});
 
 //To connect to MongoDB's  database
 mongoose.connect('mongodb://localhost', {
