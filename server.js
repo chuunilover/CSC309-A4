@@ -197,10 +197,11 @@ app.get('/restaurant/seatinfo/:restaurantID/:time', function(req, res){
 });
 
 //Reserve a seat.
-app.get('/restaurant/reserve/:restaurantID/:seatID/:time', function(req, res){
+app.get('/restaurant/reserve/:restaurantID/:seatID/:time/:user', function(req, res){
 	var reservationData = {
 		"restaurant": req.params.restaurantID,
 		"seatID": req.params.seatID,
+		"user": req.params.user,
 		"time": new Date(parseInt(req.params.time))
 		//_id: new ObjectID()
 	};
@@ -225,12 +226,6 @@ function getIndexOf(array, value){
 	return -1;
 }
 
-/*
-app.get('/reserve/:time/:seatID/:restaurantID', function(req, res){
-	//var time = 
-	var seatID = 
-}
-*/
 
 app.get('/addAdmin/:admin/:restID', function(req, res){
 	var adminUsername = req.params.admin;
@@ -301,6 +296,7 @@ var ReviewSchema = mongoose.Schema({
 var ReservationSchema = mongoose.Schema({
 	restaurant: String,
 	seatID: Number,
+	user: String,
 	time: Date
 });
 
