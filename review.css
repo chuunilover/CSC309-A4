@@ -1,4 +1,50 @@
+.rating {
+    float:left;
+}
+
+.rating span { float:right; position:relative; }
+.rating span input {
+    position:absolute;
+    top:0px;
+    left:0px;
+    opacity:0;
+}
+.rating span label {
+    display:inline-block;
+    width:30px;
+    height:30px;
+    text-align:center;
+    color:#FFF;
+    background:#ccc;
+    font-size:30px;
+    margin-right:2px;
+    line-height:30px;
+    border-radius:50%;
+    -webkit-border-radius:50%;
+}
+.rating span:hover ~ span label,
+.rating span:hover label,
+.rating span.checked label,
+.rating span.checked ~ span label {
+    background:#F90;
+    color:#FFF;
+}
+
+#text{
+    float:inherit;
+    padding: inherit;
+    min-width: 300px !important;
+    min-height: 100px !important;
+    font-size: 18px !important;
+    
+}
+
+
+
+=======
 input.reviewbox{
     width: 100;
     max-height: 10;
 }
+
+

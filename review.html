@@ -9,6 +9,11 @@
    	<meta name="author" content="">
 	<link href="bootstrap.min.css" rel="stylesheet">
 	<link href="review.css" rel="stylesheet">
+<<<<<<< HEAD
+    <link href="review.js">
+
+=======
+>>>>>>> master
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -40,13 +45,46 @@
 <div class="jumbotron">
       	<div class="container">
         	<h1>Welcome Back!</h1>
-		<h2>Want to review your recent visit?</h2>
-        	<form action="submit_review">
-            <input id="reviewbox" type="text" name="review" placeholder="Type in text"> 
-            <input type="submit" value="Submit">
+		<h2>How was your recent visit?</h2>
             
-            </form>
-		
+        <!--READ FROM THE SERVER-->
+        <h3 class="restaurant" id="nameRestaurant"></h3>
+             
+            
+        <form role="form" id="submit_review" method="post" action="/submit">
+            
+            <!--RATING-->
+            <div class="rating">
+            <span><input type="radio" name="rating" id="str5" value="5"><label for="str5"></label></span>
+            <span><input type="radio" name="rating" id="str4" value="4"><label for="str4"></label></span>
+            <span><input type="radio" name="rating" id="str3" value="3"><label for="str3"></label></span>
+            <span><input type="radio" name="rating" id="str2" value="2"><label for="str2"></label></span>
+            <span><input type="radio" name="rating" id="str1" value="1"><label for="str1"></label></span>
+            </div>
+            
+            
+
+            <br>
+            <br>
+            
+            <!-- TEXT BOX -->
+            <div class="textbox">    
+                <textarea class="form-control" rows="5" id="text" name="review_text" placeholder="Tell me how you felt about this restaurant."></textarea>
+            </div>
+            
+            <br>
+
+            <!--SUBMIT BUTTON-->
+            <div class="button">
+            <button type="submit" class="btn btn-default">Submit</button>
+            
+            </div>
+            
+        
+        </form>
+            
+            
+
       	</div>
 </div>
 
