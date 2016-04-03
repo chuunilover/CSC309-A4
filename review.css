@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .rating {
     float:left;
 }
@@ -41,3 +42,9 @@
 
 
 
+=======
+input.reviewbox{
+    width: 100;
+    max-height: 10;
+}
+>>>>>>> master
