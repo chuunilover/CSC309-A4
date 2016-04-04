@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var express = require('express');
+var Cookie = require("cookies");
 var fs = require('fs');
 var app = express();
 
@@ -79,10 +80,14 @@ app.get('/login/:username/:password', function(req, res) {
 			return;
 		}
 		else{
+			var cookies = new Cookie(req, res, {keys: ["lolololol"]});
+			cookies.set("userID", users._id.toString(), {signed: true})
+			
 			res.send("Welcome, " + username);
 		}
 	})
 });
+
 
 /*
 app.get('/review/:text/:username/:restID', function(req, res) {
@@ -226,12 +231,13 @@ function getIndexOf(array, value){
 	return -1;
 }
 
-
+//Add admin to restaurant.
 app.get('/addAdmin/:admin/:restID', function(req, res){
 	var adminUsername = req.params.admin;
 	var restaurantID = req.params.restID;
 });
 
+//Get profile details.
 app.get('/user/:userID', function(req, res){
 	console.log("getting user " + req.params.userID);
 	User.findOne({ '_id': mongoose.mongo.ObjectID(req.params.userID)}, 'username password', function (err, user) {
@@ -245,6 +251,59 @@ app.get('/user/:userID', function(req, res){
 		}
 		else{
 			res.send(JSON.stringify(user));
+		}
+	})
+});
+
+//Get review for a restaurant.
+app.get('/reviews/:restaurantID', function(req, res) {
+	Review.find({restaurant: req.params.restaurantID}, function(err, reviews){
+		if (err){
+			return handleError(err);
+		}
+		var result = []
+		for (var i in reviews){
+			result.push(JSON.stringify(reviews[i]));
+		}
+		res.send(result.toString());
+	});
+});
+
+app.get('/reviews/add/:text/:author/:name/:restaurant', function(req, res) {
+	Reservation.count({user: req.params.author, restaurant: req.params.restaurant}, function(err, count){
+		if (err){
+			return handleError(err);
+		}
+		if(count == 0){
+			res.send("Sorry, you must have reserved a table at and eaten at this restaurant in order to write a review.");	
+		}
+		else{
+			var reviewData = {
+				text: req.params.text,
+				author: req.params.author,
+				name: req.params.name,
+				restaurant: req.params.restaurant
+			};
+			var newReview = new Review(reviewData);
+			newReview.save(function(error, data){
+				if(error){
+					res.send("Error submitting review.");
+				}
+				else{
+					res.send("Your review has been published!");
+				}
+			});
+		}
+	});
+});
+
+app.get('/checkUser/:userID'){
+	users.findOne({_id, mongoose.mongo.ObjectID(req.params.userID)}, function(err, user){
+		if(err){
+			return handleError(err);
+		}
+		if (user == null){
+			return "{}";
 		}
 	})
 });
@@ -270,9 +329,10 @@ var RestaurantSchema = mongoose.Schema({
 	tags: String,
 	hours: String,
 	//The seats are uniquely id'd by their position in the array.
-	//The number of people that this particular seat can accomodate is stored in the array.
+	//The number of people that this particular seat can accommodate is stored in the array.
 	seats: [Number],
 });
+
 
 var UserSchema = mongoose.Schema({
 	username: String,
@@ -290,7 +350,7 @@ var ReviewSchema = mongoose.Schema({
 	text: String,
 	author: String,
 	name: String,
-	restaurant: Number
+	restaurant: String
 });
 
 var ReservationSchema = mongoose.Schema({
