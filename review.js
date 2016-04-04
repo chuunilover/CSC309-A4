@@ -3,6 +3,8 @@
 
 //Read in name of restaurant     
 var restaurantName = ;    
+//Get username of logged in account
+var username = ;
 
 $(document).ready(function(){
     document.getElementById("nameRestaurant").innerHTML = restaurantName;
@@ -10,8 +12,6 @@ $(document).ready(function(){
 
     
 $("#submit").click(function(){
-    //get username of logged in account
-    var username = ;
     //get restaurant name 
     var rating = document.getElementById("rating").value;
     var review = document.getElementById("review").value;
