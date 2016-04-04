@@ -23,13 +23,13 @@
 		<!--Header banner-->
 		<!--Auto resizing of header is handled in headerbar.js-->
 		<!--Styling for the elements in the header is handled in header.css-->
-		<div id="header" class="banner">
+		<!-- <div id="header" class="banner">
 			Search for a restaurant:
 			<input type="text" id="searchbox" onkeypress="process_search(event)" placeholder="<Type a restaurant name here>"/>
 			<div id="loginbanner" class="right">
 				<a href="login.html" class="banner">Login</a> | <a href="help.html" class="banner">Help</a>
 			</div>
-		</div>
+		</div> -->
 		<!--Used to keep the fixed banner from ruining the styling of a page-->
 		<div id="antibanner"></div>
 		
@@ -56,9 +56,11 @@
                 <br />Confirm password:  
 				<input type="password" id="confirmpassword" placeholder="<password>"/>
 				<br />
-				<button id="signup">Sign up</button>
+				<button id="signup" onclick="location.href='/';">Sign up</button>
 			</div> 
 		</div>
+
+		<p>Oh, you have an account already? <a href="/">Login</a></p>
 		
 	</body>
 	<!--JavaScript for the header (should use on all pages)-->
