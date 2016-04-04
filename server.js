@@ -314,6 +314,22 @@ app.get('/checkUser', function(req, res){
 	})
 });
 
+app.get('/restaurantinfo/:restaurantID', function(req, res){
+	var restaruantID = mongoose.mongo.ObjectID(req.params.restaruantID);
+	Restaurant.findOne({_id: restaruantID}, function(err, restaurant){
+		if(err){
+			return handleError(err);
+		}
+		if(restaurant == null){
+			res.send("Restaurant not found.");
+		}
+		else{
+			res.send(JSON.stringify(restaurant));
+		}
+	}
+
+}
+
 //To connect to MongoDB's  database
 mongoose.connect('mongodb://localhost', {
   user: '',

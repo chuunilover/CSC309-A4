@@ -5,7 +5,7 @@ window.onload = function() {
 	xhttp.onreadystatechange = function() {
 		if(xhttp.readyState == 4 && xhttp.status == 200){
 			try{
-			var user = JSON.parse(xhttp.responseText);
+			var user = JSON.parse(xhttp .responseText);
 				alert(JSON.stringify(user));
 			}
 			catch(e){
