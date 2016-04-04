@@ -3,46 +3,15 @@
 
 //Read in name of restaurant     
 var restaurantName = ;    
+
 //Get username of logged in account
 var username = ;
+
+var rating;
 
 $(document).ready(function(){
     document.getElementById("nameRestaurant").innerHTML = restaurantName;
 })
-
-    
-$("#submit").click(function(){
-    //get restaurant name 
-    var rating = document.getElementById("rating").value;
-    var review = document.getElementById("review").value;
-    
-	if (review == ""){
-		alert("Please write text review")
-	}
-	else if (rating == "") {
-		alert("Please rate this restaurant");
-	}
-	else{
-		alert("Review Submitted for" + restaurantName);
-		updateReview(username, restaurantName, rating, review);
-	}
-})    
-
-
-function updateReview (username, restaurantName, rating, review){
-    var MongoClient = require('mongodb').MongoClient;
-    MongoClient.connect("mongodb://localhost/admin", function(err,db){
-    var adminDB = db.admin()
-    adminDB.listDatabases(function(err, databases){
-        console.log("Before Add Database List: ");
-        console.log(databases);
-    });
-        
-     //db.users.insert({_user:username, restaurant:restaurantName, rating:rating, review:review})    
-        
-});
-}
-    
 
 $(document).ready(function(){
 //  Check Radio-box
@@ -54,9 +23,47 @@ $(document).ready(function(){
 
     $('input:radio').change(
     function(){
-        var userRating = this.value;
-        alert(userRating);
+        rating = this.value;
+        alert(rating);
     }); 
 });
+    
+$("#submit").click(function(){
+    var review = document.getElementById("review").value;
+    
+	if (review == ""){
+		alert("Please write text review")
+	}
+	else if (rating == "") {
+		alert("Please rate this restaurant");
+	}
+	else{
+		alert("Submitted review for" + restaurantName);
+		updateReview(text, rating, username, restaurant);
+	}
+    window.open("searchresults.html", "_self");
+})    
+
+
+function updateReview (text, rating, username, restaurant){
+    var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4 && xhttp.status == 200){
+			alert(xhttp.responseText);
+		}
+	};
+	try{
+		alert("http://localhost:3000/review/" + text + "/" + rating + "/" + username + "/" + restaurant);
+		xhttp.open("GET", "http://localhost:3000/review/" + text + "/" + rating + "/" + username + "/" + restaurant, true);
+		xhttp.send(null);
+	}
+	catch(e){
+		alert(e);
+	}        
+}
+
+    
+
+
 
 
