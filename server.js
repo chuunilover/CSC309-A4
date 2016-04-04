@@ -348,8 +348,8 @@ var RestaurantManagerPerms = mongoose.Schema({
 
 var ReviewSchema = mongoose.Schema({
 	text: String,
-	author: String,
-	name: String,
+	rating: Number,
+	username: String,
 	restaurant: String
 });
 
