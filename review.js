@@ -2,7 +2,8 @@
 <script type="text/javascript">
 
 //Read in name of restaurant     
-var restaurantName = ;    
+var restaurantName = ;   
+var restaurantID = ;
 
 //Get username of logged in account
 var username = ;
@@ -41,7 +42,7 @@ $("#submit").click(function(){
 		alert("Submitted review for" + restaurantName);
 		updateReview(text, rating, username, restaurant);
 	}
-    window.open("searchresults.html", "_self");
+    window.history.back();
 })    
 
 
