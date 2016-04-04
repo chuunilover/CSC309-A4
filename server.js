@@ -269,7 +269,7 @@ app.get('/reviews/:restaurantID', function(req, res) {
 	});
 });
 
-app.get('/reviews/add/:text/:author/:name/:restaurant', function(req, res) {
+app.get('/reviews/add/:text/:rating/:username/:restaurant', function(req, res) {
 	Reservation.count({user: req.params.author, restaurant: req.params.restaurant}, function(err, count){
 		if (err){
 			return handleError(err);
@@ -280,8 +280,8 @@ app.get('/reviews/add/:text/:author/:name/:restaurant', function(req, res) {
 		else{
 			var reviewData = {
 				text: req.params.text,
-				author: req.params.author,
-				name: req.params.name,
+				rating: req.params.rating,
+				username: req.params.username,
 				restaurant: req.params.restaurant
 			};
 			var newReview = new Review(reviewData);
