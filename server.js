@@ -83,7 +83,7 @@ app.get('/login/:username/:password', function(req, res) {
 		}
 		else{
 			var cookies = new Cookie(req, res, {keys: ["lolololol"]});
-			cookies.set("userID", users._id.toString(), {signed: true})
+			cookies.set("userID", users._id.toString(), {signed: true, httpOnly: false})
 			
 			res.send("Welcome, " + username);
 		}
@@ -326,9 +326,8 @@ app.get('/restaurantinfo/:restaurantID', function(req, res){
 		else{
 			res.send(JSON.stringify(restaurant));
 		}
-	}
-
-}
+	});
+});
 
 //To connect to MongoDB's  database
 mongoose.connect('mongodb://localhost', {
