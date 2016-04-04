@@ -1,10 +1,12 @@
 var mongoose = require('mongoose');
 var express = require('express');
-var Cookie = require("cookies");
+var Cookie = require('cookies');
+var cookieParser = require('cookie-parser')
 var fs = require('fs');
 var app = express();
 
 app.use(express.static(__dirname));
+app.use(cookieParser());
 
 /**********************************************************************************
 ALL GET REQUESTS ARE PROCESSED BELOW.
@@ -297,13 +299,17 @@ app.get('/reviews/add/:text/:rating/:username/:restaurant', function(req, res) {
 	});
 });
 
-app.get('/checkUser/:userID'){
-	users.findOne({_id, mongoose.mongo.ObjectID(req.params.userID)}, function(err, user){
+app.get('/checkUser', function(req, res){
+	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
+	User.findOne({_id: userID}, function(err, user){
 		if(err){
 			return handleError(err);
 		}
 		if (user == null){
-			return "{}";
+			res.send("No user found.");
+		}
+		else{
+			res.send(JSON.stringify(user));
 		}
 	})
 });
