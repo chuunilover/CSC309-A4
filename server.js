@@ -35,12 +35,56 @@ app.post('/', function(req, res){
 	console.log(req.body);
 });
 
-/*	
-By default, / should return the login page.
-*/
+//By default, / should return the login page. If logged in, profile page is returned.
 app.get('/', function(req, res) {
-	res.sendFile(__dirname + "/login.html");
+	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
+	User.findOne({_id: userID}, function(err, user){
+		if(err){
+			return handleError(err);
+		}
+		if (user == null){
+			res.sendFile(__dirname + "/login.html");
+		}
+		else{
+			res.sendFile(__dirname + "/profile.html");
+		}
+	});
 });
+
+//Return login.html if not logged in, else return profile page.
+app.get('/login.html', function(req, res){
+	console.log("login")
+	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
+	User.findOne({_id: userID}, function(err, user){
+		if(err){
+			return handleError(err);
+		}
+		if (user == null){
+			res.sendFile(__dirname + "/login.html");
+		}
+		else{
+			res.sendFile(__dirname + "/profile.html");
+		}
+	});
+});
+
+//Return signup if not logged in else return profile page.
+app.get('/signup.html', function(req, res){
+	console.log("signup")
+	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
+	User.findOne({_id: userID}, function(err, user){
+		if(err){
+			return handleError(err);
+		}
+		if (user == null){
+			res.sendFile(__dirname + "/signup.html");
+		}
+		else{
+			res.sendFile(__dirname + "/profile.html");
+		}
+	});
+});
+
 
 //Experimenting with post..
 app.post('/search', function(req, res){

@@ -1,3 +1,5 @@
+
+
 $("#login").click(function(){
 	var inputtedUsername = document.getElementById("username").value;
 	var inputtedPassword = document.getElementById("password").value;

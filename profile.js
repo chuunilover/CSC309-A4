@@ -5,7 +5,7 @@
 			try{
 			var user = JSON.parse(xhttp.responseText);
 				$("#welcome-message").html("Welcome, " + user.name);
-				alert(user.name); 
+				//alert(user.name); 
 			}
 			catch(e){
 				alert("You're not logged in.");

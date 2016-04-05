@@ -10,6 +10,7 @@ div.banner{
 	border-bottom: 1px solid #3399FF;
 	font-family: "Avenir", sans-serif;
 	font-size: 16px;
+	visibility: hidden;
 }
 
 #antibanner{
