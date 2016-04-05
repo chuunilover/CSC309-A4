@@ -8,6 +8,7 @@ var fs = require('fs');
 var bcrypt = require('bcrypt-nodejs');
 var app = express();
 var passport = require('passport');
+var ObjectID = require('mongodb').ObjectID;
 var LocalStrategy = require('passport-local').Strategy
 
 app.use(bodyParser()); 
@@ -255,7 +256,6 @@ app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(r
 app.get('/restaurant/seatinfo/:restaurantID/:time', function(req, res){
 	var time = new Date(parseInt(req.params.time));
 	var restaurantID = mongoose.mongo.ObjectID(req.params.restaurantID);
-	console.log(req.params.restaurantID);
 	Reservation.find({restaurant: req.params.restaurantID}, 'seatID time', function (err, rest) {
 		if (err){
 			//return handleError(err);
@@ -264,8 +264,7 @@ app.get('/restaurant/seatinfo/:restaurantID/:time', function(req, res){
 		}
 		var seatsFree = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 		for (i = 0; i < rest.length; i++){
-			var timeDif = Math.abs(rest[i].time.getMilliseconds() - time);
-			console.log(timeDif);
+			var timeDif = Math.abs(rest[i].time.getTime() - parseInt(req.params.time));
 			if(timeDif < (1000*60*90)){
 				var idxToRemove = getIndexOf(seatsFree, rest[i].seatID);
 				if(idxToRemove != -1){
@@ -278,11 +277,19 @@ app.get('/restaurant/seatinfo/:restaurantID/:time', function(req, res){
 });
 
 //Reserve a seat.
-app.get('/restaurant/reserve/:restaurantID/:seatID/:time/:user', function(req, res){
+app.get('/restaurant/reserve/:restaurantID/:seatID/:time', function(req, res){
+	if (req.cookies.userID == null){
+		res.send("Please log in.")
+		return;
+	}
+	console.log(parseInt(req.params.time))
+	var newdate = new Date(parseInt(req.params.time))
+	console.log(newdate);
+	console.log(newdate.getTime())
 	var reservationData = {
 		"restaurant": req.params.restaurantID,
 		"seatID": req.params.seatID,
-		"user": req.params.user,
+		"user": req.cookies.userID,
 		"time": new Date(parseInt(req.params.time))
 		//_id: new ObjectID()
 	};
@@ -389,8 +396,7 @@ app.get('/checkUser', function(req, res){
 });
 
 app.get('/restaurantinfo/:restaurantID', function(req, res){
-	var restaruantID = mongoose.mongo.ObjectID(req.params.restaruantID);
-	Restaurant.findOne({_id: restaruantID}, function(err, restaurant){
+	Restaurant.findOne({_id: ObjectID(req.params.restaurantID)}, function(err, restaurant){
 		if(err){
 			return handleError(err);
 		}

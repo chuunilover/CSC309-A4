@@ -6,7 +6,7 @@
 	        Saved for offline access/testing.-->
 	<script src="jQuery.js"></script>
 
-	
+	<link href="bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="header.css">
 	<link rel="stylesheet" type="text/css" href="login.css">
 	
@@ -34,8 +34,12 @@
 		<!--Used to keep the fixed banner from ruining the styling of a page-->
 		<div id="antibanner"></div>
 		
-		<div >
-			<h1 id="welcome-message"></h1>
+		<div class="jumbotron">
+			<div class="container">
+				<h1 id="welcome-message">Welcome to Restaurant Reserver!</h1>
+				<p>Please log in to begin reserving your table.</p>
+				<p><a class="btn btn-primary btn-lg" href="help.html" role="button">Help &raquo;</a></p>
+			</div>
 		</div>
 		
 	</body>
@@ -43,4 +47,9 @@
 	<script src="headerbar.js"></script>
 	<script src="profile.js"></script>
 	<!--JavaScript for the signup page-->
+	<!--Bootstrap stuff-->
+	<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </html>

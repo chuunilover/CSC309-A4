@@ -1,8 +1,11 @@
-alert("srsly")
 var canvas = document.getElementById("myCanvas");
 var context = canvas.getContext("2d");
 var allTables = [];
 canvas.addEventListener("mousedown", handleMouseDown, false);
+var search_terms = /[^\?]*$/;
+var restID = $(location).attr('href').match(search_terms)[0]
+
+var currentDateString = ""
 
 function drawCircle(x, y, rad, incolor, outcolor) {
 	context.beginPath();
@@ -17,6 +20,8 @@ function drawCircle(x, y, rad, incolor, outcolor) {
 
 
 function drawRestaurant() {
+	var t = document.getElementById("time");
+	currentDateString = $("#datepicker").val() + " " + t.options[t.selectedIndex].value;
 	allTables=[]
 
 	//Table 1
@@ -154,6 +159,8 @@ function drawRestaurant() {
 	drawCircle(605,574,10,'white', 'black');
 	drawCircle(515,646,10,'white', 'black');
 	drawCircle(605,646,10,'white', 'black'); 
+	
+	requestSearch();
 }
 
 
@@ -176,22 +183,96 @@ function handleMouseDown(event) {
 	var click_y = event.pageY - rect.top;
 	for(i = 0; i < allTables.length; i++){ 
 		if(tableIsClicked(allTables[i], click_x, click_y)){
-			confirm('Would you like to reserve this table?');
+			if (confirm('Would you like to reserve this table?')){
+				requestReserve(i + 1);
+			}
 		}
 	}
 }
 
-$(function() {
-	$('#datepicker').datepicker({ 
-        	dateFormat: "yy-mm-dd", 
-        	onSelect: function(){
-        		var selected = $(this).val();
-        		alert(selected);
-       	 	}
-    	});
+$('#datepicker').datepicker({
+	format: "dd/mm/yyyy"
 });
 
+//'/restaurant/reserve/:restaurantID/:seatID/:time'
+function requestReserve(tableNum) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4 && xhttp.status == 200){
+			try{
+				alert(xhttp.responseText);
+			}
+			catch(e){
+				alert(e);
+			}
+		}
+		if (xhttp.readyState == 4 && xhttp.status == 404){
+			alert("Reservation failed.");
+		}
+	};
+	try{
+		new Date(currentDateString).getTime()
+		xhttp.open("GET", "http://localhost:3000/restaurant/reserve/" + restID + "/" + tableNum.toString() + "/" + new Date(currentDateString).getTime(), true);
+		xhttp.send(null);
+	}
+	catch(e){
+		alert(e);
+	}
+}
 
+function requestSearch () {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4 && xhttp.status == 200){
+			try{
+				var restaurants = JSON.parse('[' + xhttp.responseText + ']');
+				alert(xhttp.responseText);
+				draw_free_tables(restaurants)
+			}
+			catch(e){
+				alert(e);
+			}
+		}
+		if (xhttp.readyState == 4 && xhttp.status == 404){
+			alert("Could not find this restaurant.");
+		}
+	};
+	try{
+		new Date(currentDateString).getTime()
+		xhttp.open("GET", "http://localhost:3000/restaurant/seatinfo/" + restID + "/" + new Date(currentDateString).getTime(), true);
+		xhttp.send(null);
+	}
+	catch(e){
+		alert(e);
+	}
+}
 
-	
+function draw_free_tables(freeTables){
+	for (var k in allTables){
+		if(arrayIndex(freeTables, parseInt(k) + 1) > -1){
+			draw_circle_filled(allTables[k].x, allTables[k].y, 40, 'green', 'green');
+		}
+		else{
+			draw_circle_filled(allTables[k].x, allTables[k].y, 40, 'red', 'red');
+		}
+	}
+}
 
+function arrayIndex(array, value){
+	for (var p in array){
+		if (array[p] == value){
+			return p;
+		}
+	}
+	return -1
+}
+
+function draw_circle_filled(x, y, rad, incolor, outcolor) {
+	context.beginPath();
+    context.arc(x, y, rad/2, 0, 2 * Math.PI, false);
+    context.fillStyle = incolor;
+    context.fill();
+    context.lineWidth = rad/2;
+    context.strokeStyle = outcolor;
+    context.stroke();
+}
