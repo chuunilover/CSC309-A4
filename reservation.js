@@ -16,7 +16,10 @@ function drawCircle(x, y, rad, incolor, outcolor) {
 
 
 function drawRestaurant() {
+	allTables=[]
+
 	//Table 1
+	
 	var table1 = {x: 95, y:60};
 	allTables = allTables.concat(table1);
 	drawCircle(95, 60, 40, 'white', 'black');
@@ -152,8 +155,6 @@ function drawRestaurant() {
 	drawCircle(605,646,10,'white', 'black'); 
 }
 
-drawRestaurant();
-
 
 
 function tableIsClicked(table, mousex, mousey){
@@ -174,10 +175,22 @@ function handleMouseDown(event) {
 	var click_y = event.pageY - rect.top;
 	for(i = 0; i < allTables.length; i++){ 
 		if(tableIsClicked(allTables[i], click_x, click_y)){
-			alert('Clicked');
+			confirm('Would you like to reserve this table?');
 		}
 	}
 }
+
+$(function() {
+	$('#datepicker').datepicker({ 
+        	dateFormat: "yy-mm-dd", 
+        	onSelect: function(){
+        		var selected = $(this).val();
+        		alert(selected);
+       	 	}
+    	});
+	$('#timepicker').timepicker();
+   
+});
 
 
 
