@@ -160,8 +160,8 @@ app.get('/login/:username/:password', function(req, res) {
 
 /* Need this for passport.use local-login to work, need to work in the /login route*/
 app.post('/login', passport.authenticate('local-login', {
-	successRedirect: '/profile', // goes to profile page on success
-	failureRedirect: '/login', // not correct, enter info again
+	successRedirect: '/profile.html', // goes to profile page on success
+	failureRedirect: '/login.html', // not correct, enter info again
 }));
 
 
