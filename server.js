@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 var express = require('express');
 var Cookie = require('cookies');
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
 var fs = require('fs');
+var bcrypt = require('bcrypt-nodejs');
 var app = express();
 
 app.use(express.static(__dirname));
@@ -327,10 +328,6 @@ app.get('/restaurantinfo/:restaurantID', function(req, res){
 			res.send(JSON.stringify(restaurant));
 		}
 	});
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 });
 
 //To connect to MongoDB's  database
