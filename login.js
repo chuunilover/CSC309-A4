@@ -24,7 +24,9 @@ function requestLogin (username, password) {
 	xhttp.onreadystatechange = function() {
 		if (xhttp.readyState == 4 && xhttp.status == 200){
 			alert(xhttp.responseText);
-			window.open("profile.html", "_self");
+			if (xhttp.responseText != "You inputted invalid login credentials."){
+				window.open("profile.html", "_self");
+			}
 		}
 	};
 	try{
