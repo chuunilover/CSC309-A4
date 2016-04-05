@@ -327,10 +327,6 @@ app.get('/restaurantinfo/:restaurantID', function(req, res){
 			res.send(JSON.stringify(restaurant));
 		}
 	});
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 });
 
 //To connect to MongoDB's  database

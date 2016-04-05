@@ -8,6 +8,7 @@
 	
 	<link rel="stylesheet" type="text/css" href="header.css">
 	<link rel="stylesheet" type="text/css" href="restaurantinfo.css">
+    <link href="restaurantinfo.js">
 	
 	<!--Page head-->
 	
@@ -28,11 +29,14 @@
 				<a href="login.html" class="banner">Login</a> | <a href="help.html" class="banner">Help</a>
 			</div>
 		</div>
+        
+        
 		<!--Used to keep the fixed banner from ruining the styling of a page-->
 		<div id="antibanner"></div>
 		
 		<div id="results">
-			<h1> Yum Yum's</h1>
+            
+			<h1 id="restaurantName">Yum Yum's</h1>
 			<img id="wrapText" src="dim-sum.jpg">
 			<b>About us: </b>
 			Are you looking for great flavour without breaking the bank? Then come to Yum Yum's! Here at Yum Yum's, we serve the finest Chinese food on the University of Toronto campus, all while keeping the prices affordable. Are you a UofT student? We offer various discounts to students!
@@ -46,6 +50,8 @@
 			E-mail: food@yumyums.com <br />
 			Address: 22 St. George Streeet, Toronto, ON
 			<br /><br />
+            <button type="submit" id="writeReview" class="btn btn-default">Write review</button>
+            <br>
 			<div id="reviewStyle">
 				<h2>Reviews:</h2>
 				<div id="individReviews">
@@ -70,3 +76,5 @@
 	<!--JavaScript for the header (should use on all pages)-->
 	<script src="headerbar.js"></script>
 </html>
+    
+   
