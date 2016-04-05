@@ -10,6 +10,7 @@ $("#login").click(function(){
 	else{
 		requestLogin(inputtedUsername, inputtedPassword);
 	}
+	window.open("profile.html", "_self");
 })
 
 $("#signup").click(function(){

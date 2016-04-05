@@ -3,8 +3,9 @@ var express = require('express');
 var Cookie = require('cookies');
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
-var connect= require('connect')
+var connect = require('connect')
 var fs = require('fs');
+var bcrypt = require('bcrypt-nodejs');
 var app = express();
 
 app.use(bodyParser()); 
