@@ -22,6 +22,7 @@ $("#signup").click(function(){
 	else{
 		requestSignup(inputtedUsername, inputtedName, inputtedEmail, inputtedPassword);
 	}
+	window.open("login.html", "_self");
 })
 
 //Request a signup. Requests involve appending a specific query to the end of the web address.
