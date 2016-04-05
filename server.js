@@ -387,13 +387,13 @@ var UserSchema = mongoose.Schema({
 	password: String
 });
 
-// genertes a hash for the password for userSchema
-userSchema.methods.generateHash = function(password) {
+// generates a hash for the password for userSchema
+UserSchema.methods.generateHash = function(password) {
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
 // check that password is valid
-userSchema.methods.validPassword = function(password) {
+UserSchema.methods.validPassword = function(password) {
 	return bcrypt.compareSync(password, this.password);
 };
 
