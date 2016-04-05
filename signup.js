@@ -22,7 +22,6 @@ $("#signup").click(function(){
 	else{
 		requestSignup(inputtedUsername, inputtedName, inputtedEmail, inputtedPassword);
 	}
-	window.open("login.html", "_self");
 });
 
 //Request a signup. Requests involve appending a specific query to the end of the web address.
@@ -31,6 +30,7 @@ function requestSignup (username, name, email, password) {
 	xhttp.onreadystatechange = function() {
 		if (xhttp.readyState == 4 && xhttp.status == 200){
 			alert(xhttp.responseText);
+			window.open("login.html", "_self");
 		}
 	};
 	try{

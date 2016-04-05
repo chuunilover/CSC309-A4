@@ -10,7 +10,6 @@ $("#login").click(function(){
 	else{
 		requestLogin(inputtedUsername, inputtedPassword);
 	}
-	window.open("profile.html", "_self");
 })
 
 $("#signup").click(function(){
@@ -23,6 +22,7 @@ function requestLogin (username, password) {
 	xhttp.onreadystatechange = function() {
 		if (xhttp.readyState == 4 && xhttp.status == 200){
 			alert(xhttp.responseText);
+			window.open("profile.html", "_self");
 		}
 	};
 	try{
