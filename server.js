@@ -2,8 +2,16 @@ var mongoose = require('mongoose');
 var express = require('express');
 var Cookie = require('cookies');
 var cookieParser = require('cookie-parser')
+var bodyParser = require('body-parser')
+var connect = require('connect')
 var fs = require('fs');
+var bcrypt = require('bcrypt-nodejs');
 var app = express();
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy
+
+app.use(bodyParser()); 
+app.use(passport.initialize());
 
 app.use(express.static(__dirname));
 app.use(cookieParser());
@@ -12,7 +20,23 @@ app.use(cookieParser());
 ALL GET REQUESTS ARE PROCESSED BELOW.
 **********************************************************************************/
 
-/*
+passport.use('local-login', new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      if (!user.verifyPassword(password)) { return done(null, false); }
+	  	cookies.set("userID", users._id.toString(), {signed: true, httpOnly: false})
+      return done(null, user);
+    });
+  }
+));
+
+app.post('/', function(req, res){
+	console.log(req.body);
+});
+
+/*	
 By default, / should return the login page.
 */
 app.get('/', function(req, res) {
@@ -89,6 +113,12 @@ app.get('/login/:username/:password', function(req, res) {
 		}
 	})
 });
+
+/* Need this for passport.use local-login to work, need to work in the /login route*/
+app.post('/login', passport.authenticate('local-login', {
+	successRedirect: '/profile', // goes to profile page on success
+	failureRedirect: '/login', // not correct, enter info again
+}));
 
 
 /*
@@ -327,6 +357,25 @@ app.get('/restaurantinfo/:restaurantID', function(req, res){
 			res.send(JSON.stringify(restaurant));
 		}
 	});
+<<<<<<< HEAD
+=======
+});
+
+app.get('/users/update/:name/:email', function(req, res){
+	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
+	console.log("Attempting to update user info...");
+	User.findOneAndUpdate({_id: userID}, {name: req.params.name, email: req.params.email}, function(err, user){
+		if(err) {
+			return handleError(err);
+		}
+		if(user == null){
+			res.send("You aren't logged in.");
+		}
+		else{
+			res.send("info updated!");
+		}
+	});
+>>>>>>> origin/master
 });
 
 //To connect to MongoDB's  database
@@ -361,6 +410,18 @@ var UserSchema = mongoose.Schema({
 	email: String,
 	password: String
 });
+
+// generates a hash for the password for userSchema
+UserSchema.methods.generateHash = function(password) {
+	console.log("password encrypted");
+	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+// check that password is valid
+UserSchema.methods.validPassword = function(password) {
+	console.log("validating password");
+	return bcrypt.compareSync(password, this.password);
+};
 
 var RestaurantManagerPerms = mongoose.Schema({
 	restaurant_id: Number,
