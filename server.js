@@ -19,7 +19,7 @@ app.use(cookieParser());
 ALL GET REQUESTS ARE PROCESSED BELOW.
 **********************************************************************************/
 
-passport.use(new LocalStrategy(
+passport.use('local-login', new LocalStrategy(
   function(username, password, done) {
     User.findOne({ username: username }, function (err, user) {
       if (err) { return done(err); }
@@ -112,6 +112,12 @@ app.get('/login/:username/:password', function(req, res) {
 		}
 	})
 });
+
+/* Need this for passport.use local-login to work, need to work in the /login route*/
+app.post('/login', passport.authenticate('local-login', {
+	successRedirect: '/profile', // goes to profile page on success
+	failureRedirect: '/login', // not correct, enter info again
+}));
 
 
 /*
