@@ -401,8 +401,6 @@ app.get('/restaurantinfo/:restaurantID', function(req, res){
 			res.send(JSON.stringify(restaurant));
 		}
 	});
-<<<<<<< HEAD
-=======
 });
 
 app.get('/users/update/:name/:email', function(req, res){
@@ -419,7 +417,6 @@ app.get('/users/update/:name/:email', function(req, res){
 			res.send("info updated!");
 		}
 	});
->>>>>>> origin/master
 });
 
 //To connect to MongoDB's  database
