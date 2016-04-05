@@ -1,9 +1,8 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js">
-<script type="text/javascript">
-
+<script type="text/javascript">   
+    
 //Read in name of restaurant     
-var restaurantName = ;   
-var restaurantID = ;
+var restaurantName = localStorage.getItem(restaurant);   
 
 //Get username of logged in account
 var username = user.username;

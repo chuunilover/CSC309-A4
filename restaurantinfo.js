@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+var name = document.getElementById("restaurantName").value;
+
+
+
+
+
+
+
+$("#submit").click(function(){ 
+    localStorage.setItem(restaurant, name);
+    window.open("review.html", "_self");
+}) 
+=======
 var search_terms = /[^\?]*$/;
 var query = $(location).attr('href').match(search_terms)[0]
 requestSearch(query);
@@ -30,3 +44,4 @@ function requestSearch (keywords) {
 		alert(e);
 	}
 }
+>>>>>>> origin/master
