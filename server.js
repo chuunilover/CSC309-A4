@@ -326,9 +326,9 @@ app.get('/restaurantinfo/:restaurantID', function(req, res){
 		else{
 			res.send(JSON.stringify(restaurant));
 		}
-	}
+	});
 
-}
+});
 
 //To connect to MongoDB's  database
 mongoose.connect('mongodb://localhost', {
