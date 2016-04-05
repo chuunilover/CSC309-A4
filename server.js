@@ -2,8 +2,12 @@ var mongoose = require('mongoose');
 var express = require('express');
 var Cookie = require('cookies');
 var cookieParser = require('cookie-parser')
+var bodyParser = require('body-parser')
+var connect= require('connect')
 var fs = require('fs');
 var app = express();
+
+app.use(bodyParser()); 
 
 app.use(express.static(__dirname));
 app.use(cookieParser());
@@ -12,7 +16,11 @@ app.use(cookieParser());
 ALL GET REQUESTS ARE PROCESSED BELOW.
 **********************************************************************************/
 
-/*
+app.post('/', function(req, res){
+	console.log(req.body);
+});
+
+/*	
 By default, / should return the login page.
 */
 app.get('/', function(req, res) {
@@ -327,10 +335,22 @@ app.get('/restaurantinfo/:restaurantID', function(req, res){
 			res.send(JSON.stringify(restaurant));
 		}
 	});
-<<<<<<< HEAD
+});
 
-=======
->>>>>>> origin/master
+app.get('/users/update/:name/:email', function(req, res){
+	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
+	console.log("Attempting to update user info...");
+	User.findOneAndUpdate({_id: userID}, {name: req.params.name, email: req.params.email}, function(err, user){
+		if(err) {
+			return handleError(err);
+		}
+		if(user == null){
+			res.send("You aren't logged in.");
+		}
+		else{
+			res.send("info updated!");
+		}
+	});
 });
 
 //To connect to MongoDB's  database
