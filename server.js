@@ -7,6 +7,8 @@ var connect = require('connect')
 var fs = require('fs');
 var bcrypt = require('bcrypt-nodejs');
 var app = express();
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy
 
 app.use(bodyParser()); 
 
@@ -16,6 +18,18 @@ app.use(cookieParser());
 /**********************************************************************************
 ALL GET REQUESTS ARE PROCESSED BELOW.
 **********************************************************************************/
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      if (!user.verifyPassword(password)) { return done(null, false); }
+	  	cookies.set("userID", users._id.toString(), {signed: true, httpOnly: false})
+      return done(null, user);
+    });
+  }
+));
 
 app.post('/', function(req, res){
 	console.log(req.body);
@@ -389,11 +403,13 @@ var UserSchema = mongoose.Schema({
 
 // generates a hash for the password for userSchema
 UserSchema.methods.generateHash = function(password) {
+	console.log("password encrypted");
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
 // check that password is valid
 UserSchema.methods.validPassword = function(password) {
+	console.log("validating password");
 	return bcrypt.compareSync(password, this.password);
 };
 
