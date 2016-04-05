@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 var express = require('express');
 var Cookie = require('cookies');
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
-var connect = require('connect')
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var connect = require('connect');
 var fs = require('fs');
 var bcrypt = require('bcrypt-nodejs');
 var app = express();
@@ -21,17 +21,40 @@ app.use(cookieParser());
 ALL GET REQUESTS ARE PROCESSED BELOW.
 **********************************************************************************/
 
-passport.use('local-login', new LocalStrategy(
-  function(username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) { return done(null, false); }
-      if (!user.verifyPassword(password)) { return done(null, false); }
-	  	cookies.set("userID", users._id.toString(), {signed: true, httpOnly: false})
-      return done(null, user);
-    });
-  }
-));
+// passport.use('local-login', new LocalStrategy(
+//   function(username, password, done) {
+//     User.findOne({ username: username }, function (err, user) {
+//       if (err) { return done(err); }
+//       if (!user) { return done(null, false); }
+//       if (!user.verifyPassword(password)) { return done(null, false); }
+// 	  	cookies.set("userID", users._id.toString(), {signed: true, httpOnly: false})
+//       return done(null, user);
+//     });
+//   }
+// ));
+
+// passport.use('local-signup', new LocalStrategy(
+// 	function(username, password, done) {
+// 		User.findOne({ username: username }, function (err, user) {
+// 			if (err) { return done(err); }
+// 			// does the user exist already?
+// 			if (user) { return done(null, false); }
+// 			// user does not exist, create new user
+// 			else {
+// 				var newUser = new User();
+// 				//set local credentials
+// 				newUser.username = username;
+// 				newUser.password = newUser.generateHash(password);
+// 				//save the user
+// 				newUser.save(function(err) {
+// 					if (err) {
+// 						throw err;
+// 					}
+// 					return done (null, newUser);
+// 				});
+// 			}
+// 		});
+// 	}));
 
 app.post('/', function(req, res){
 	console.log(req.body);
@@ -52,6 +75,30 @@ app.get('/', function(req, res) {
 		}
 	});
 });
+//By default, / should return the login page. If logged in, profile page is returned.
+// app.get('/', function (req, res) {
+// 	res.sendFile(__dirname + "/login.html");
+// });
+
+// app.get('/login', function (req, res) {
+// 	res.sendFile(__dirname + "/login.html");
+// });
+
+// // /* Need this for passport.use local-login to work, need to work in the /login route*/
+// app.post('/login', passport.authenticate('local-login', {
+// 	successRedirect: '/profile.html', // goes to profile page on success
+// 	failureRedirect: '/login.html', // not correct, enter info again
+// }));
+
+// app.get('/signup', function (req, res) {
+// 	res.sendFile(__dirname + "/signup.html");
+// });
+
+// // /* Need this for passport.use local-signup to work, need to work in the /signup route*/
+// app.post('/signup', passport.authenticate('local-login', {
+// 	successRedirect: '/profile.html', // goes to profile page on success
+// 	failureRedirect: '/signup.html', // not correct, enter info again
+// }));
 
 //Return login.html if not logged in, else return profile page.
 app.get('/login.html', function(req, res){
@@ -72,7 +119,7 @@ app.get('/login.html', function(req, res){
 
 //Return signup if not logged in else return profile page.
 app.get('/signup.html', function(req, res){
-	console.log("signup")
+	console.log("signup");
 	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
 	User.findOne({_id: userID}, function(err, user){
 		if(err){
@@ -123,6 +170,8 @@ app.get('/signup/:username/:name/:email/:password', function(req, res) {
 			};
 
 			var newUser = new User(userData);
+			newUser.password = newUser.generateHash(password);
+			console.log(newUser.password);
 			newUser.save(function(error, data){
 				if(error){
 					res.send("Error creating new user");
@@ -136,7 +185,7 @@ app.get('/signup/:username/:name/:email/:password', function(req, res) {
 	})
 });
 
-//login request
+// //login request
 app.get('/login/:username/:password', function(req, res) {
 	var username = req.params.username;
 	var password = req.params.password;
@@ -145,7 +194,7 @@ app.get('/login/:username/:password', function(req, res) {
 		if (err){
 			return handleError(err);
 		}
-		else if (users === null || users.password != password){
+		else if (users === null || !users.validPassword(password)){
 			console.log("Rejected login credentials.");
 			res.send("You inputted invalid login credentials.");
 			return;
@@ -159,11 +208,7 @@ app.get('/login/:username/:password', function(req, res) {
 	})
 });
 
-/* Need this for passport.use local-login to work, need to work in the /login route*/
-app.post('/login', passport.authenticate('local-login', {
-	successRedirect: '/profile.html', // goes to profile page on success
-	failureRedirect: '/login.html', // not correct, enter info again
-}));
+
 
 
 /*
