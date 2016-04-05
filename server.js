@@ -83,17 +83,17 @@ app.get('/', function(req, res) {
 // 	res.sendFile(__dirname + "/login.html");
 // });
 
-// /* Need this for passport.use local-login to work, need to work in the /login route*/
+// // /* Need this for passport.use local-login to work, need to work in the /login route*/
 // app.post('/login', passport.authenticate('local-login', {
 // 	successRedirect: '/profile.html', // goes to profile page on success
 // 	failureRedirect: '/login.html', // not correct, enter info again
 // }));
 
-app.get('/signup', function (req, res) {
-	res.sendFile(__dirname + "/signup.html");
-});
+// app.get('/signup', function (req, res) {
+// 	res.sendFile(__dirname + "/signup.html");
+// });
 
-// /* Need this for passport.use local-signup to work, need to work in the /signup route*/
+// // /* Need this for passport.use local-signup to work, need to work in the /signup route*/
 // app.post('/signup', passport.authenticate('local-login', {
 // 	successRedirect: '/profile.html', // goes to profile page on success
 // 	failureRedirect: '/signup.html', // not correct, enter info again
@@ -182,7 +182,7 @@ app.get('/signup/:username/:name/:email/:password', function(req, res) {
 	})
 });
 
-//login request
+// //login request
 app.get('/login/:username/:password', function(req, res) {
 	var username = req.params.username;
 	var password = req.params.password;
