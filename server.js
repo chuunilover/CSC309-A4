@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 var express = require('express');
 var Cookie = require('cookies');
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
-var connect = require('connect')
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var connect = require('connect');
 var fs = require('fs');
 var bcrypt = require('bcrypt-nodejs');
 var app = express();
@@ -74,6 +74,30 @@ app.get('/', function(req, res) {
 		}
 	});
 });
+//By default, / should return the login page. If logged in, profile page is returned.
+// app.get('/', function (req, res) {
+// 	res.sendFile(__dirname + "/login.html");
+// });
+
+// app.get('/login', function (req, res) {
+// 	res.sendFile(__dirname + "/login.html");
+// });
+
+// /* Need this for passport.use local-login to work, need to work in the /login route*/
+// app.post('/login', passport.authenticate('local-login', {
+// 	successRedirect: '/profile.html', // goes to profile page on success
+// 	failureRedirect: '/login.html', // not correct, enter info again
+// }));
+
+app.get('/signup', function (req, res) {
+	res.sendFile(__dirname + "/signup.html");
+});
+
+// /* Need this for passport.use local-signup to work, need to work in the /signup route*/
+// app.post('/signup', passport.authenticate('local-login', {
+// 	successRedirect: '/profile.html', // goes to profile page on success
+// 	failureRedirect: '/signup.html', // not correct, enter info again
+// }));
 
 //Return login.html if not logged in, else return profile page.
 app.get('/login.html', function(req, res){
@@ -94,7 +118,7 @@ app.get('/login.html', function(req, res){
 
 //Return signup if not logged in else return profile page.
 app.get('/signup.html', function(req, res){
-	console.log("signup")
+	console.log("signup");
 	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
 	User.findOne({_id: userID}, function(err, user){
 		if(err){
@@ -181,17 +205,7 @@ app.get('/login/:username/:password', function(req, res) {
 	})
 });
 
-/* Need this for passport.use local-login to work, need to work in the /login route*/
-app.post('/login', passport.authenticate('local-login', {
-	successRedirect: '/profile.html', // goes to profile page on success
-	failureRedirect: '/login.html', // not correct, enter info again
-}));
 
-/* Need this for passport.use local-signup to work, need to work in the /signup route*/
-app.post('/signup', passport.authenticate('local-login', {
-	successRedirect: '/profile.html', // goes to profile page on success
-	failureRedirect: '/signup.html', // not correct, enter info again
-}));
 
 
 /*
