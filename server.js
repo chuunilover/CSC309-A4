@@ -32,6 +32,29 @@ passport.use('local-login', new LocalStrategy(
   }
 ));
 
+passport.use('local-signup', new LocalStrategy(
+	function(username, password, done) {
+		User.findOne({ username: username }, function (err, user) {
+			if (err) { return done(err); }
+			// does the user exist already?
+			if (user) { return done(null, false); }
+			// user does not exist, create new user
+			else {
+				var newUser = new User();
+				//set local credentials
+				newUser.username = username;
+				newUser.password = newUser.generateHash(password);
+				//save the user
+				newUser.save(function(err) {
+					if (err) {
+						throw err;
+					}
+					return done (null, newUser);
+				});
+			}
+		});
+	}));
+
 app.post('/', function(req, res){
 	console.log(req.body);
 });
@@ -162,6 +185,12 @@ app.get('/login/:username/:password', function(req, res) {
 app.post('/login', passport.authenticate('local-login', {
 	successRedirect: '/profile.html', // goes to profile page on success
 	failureRedirect: '/login.html', // not correct, enter info again
+}));
+
+/* Need this for passport.use local-signup to work, need to work in the /signup route*/
+app.post('/signup', passport.authenticate('local-login', {
+	successRedirect: '/profile.html', // goes to profile page on success
+	failureRedirect: '/signup.html', // not correct, enter info again
 }));
 
 
