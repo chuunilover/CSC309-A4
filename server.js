@@ -20,40 +20,40 @@ app.use(cookieParser());
 ALL GET REQUESTS ARE PROCESSED BELOW.
 **********************************************************************************/
 
-passport.use('local-login', new LocalStrategy(
-  function(username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) { return done(null, false); }
-      if (!user.verifyPassword(password)) { return done(null, false); }
-	  	cookies.set("userID", users._id.toString(), {signed: true, httpOnly: false})
-      return done(null, user);
-    });
-  }
-));
+// passport.use('local-login', new LocalStrategy(
+//   function(username, password, done) {
+//     User.findOne({ username: username }, function (err, user) {
+//       if (err) { return done(err); }
+//       if (!user) { return done(null, false); }
+//       if (!user.verifyPassword(password)) { return done(null, false); }
+// 	  	cookies.set("userID", users._id.toString(), {signed: true, httpOnly: false})
+//       return done(null, user);
+//     });
+//   }
+// ));
 
-passport.use('local-signup', new LocalStrategy(
-	function(username, password, done) {
-		User.findOne({ username: username }, function (err, user) {
-			if (err) { return done(err); }
-			// does the user exist already?
-			if (user) { return done(null, false); }
-			// user does not exist, create new user
-			else {
-				var newUser = new User();
-				//set local credentials
-				newUser.username = username;
-				newUser.password = newUser.generateHash(password);
-				//save the user
-				newUser.save(function(err) {
-					if (err) {
-						throw err;
-					}
-					return done (null, newUser);
-				});
-			}
-		});
-	}));
+// passport.use('local-signup', new LocalStrategy(
+// 	function(username, password, done) {
+// 		User.findOne({ username: username }, function (err, user) {
+// 			if (err) { return done(err); }
+// 			// does the user exist already?
+// 			if (user) { return done(null, false); }
+// 			// user does not exist, create new user
+// 			else {
+// 				var newUser = new User();
+// 				//set local credentials
+// 				newUser.username = username;
+// 				newUser.password = newUser.generateHash(password);
+// 				//save the user
+// 				newUser.save(function(err) {
+// 					if (err) {
+// 						throw err;
+// 					}
+// 					return done (null, newUser);
+// 				});
+// 			}
+// 		});
+// 	}));
 
 app.post('/', function(req, res){
 	console.log(req.body);
@@ -169,6 +169,8 @@ app.get('/signup/:username/:name/:email/:password', function(req, res) {
 			};
 
 			var newUser = new User(userData);
+			newUser.password = newUser.generateHash(password);
+			console.log(newUser.password);
 			newUser.save(function(error, data){
 				if(error){
 					res.send("Error creating new user");
@@ -191,7 +193,7 @@ app.get('/login/:username/:password', function(req, res) {
 		if (err){
 			return handleError(err);
 		}
-		else if (users === null || users.password != password){
+		else if (users === null || !users.validPassword(password)){
 			console.log("Rejected login credentials.");
 			res.send("You inputted invalid login credentials.");
 			return;
