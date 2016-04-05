@@ -2,8 +2,6 @@ var search_terms = /[^\?]*$/;
 var query = $(location).attr('href').match(search_terms)[0]
 requestSearch(query);
 
-
-
 function requestSearch (keywords) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {

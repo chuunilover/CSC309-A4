@@ -83,7 +83,7 @@ app.get('/login/:username/:password', function(req, res) {
 		}
 		else{
 			var cookies = new Cookie(req, res, {keys: ["lolololol"]});
-			cookies.set("userID", users._id.toString(), {signed: true})
+			cookies.set("userID", users._id.toString(), {signed: true, httpOnly: false})
 			
 			res.send("Welcome, " + username);
 		}
@@ -271,7 +271,7 @@ app.get('/reviews/:restaurantID', function(req, res) {
 	});
 });
 
-app.get('/reviews/add/:text/:rating/:username/:restaurant', function(req, res) {
+app.get('/reviews/add/:text/:author/:name/:restaurant', function(req, res) {
 	Reservation.count({user: req.params.author, restaurant: req.params.restaurant}, function(err, count){
 		if (err){
 			return handleError(err);
@@ -282,8 +282,8 @@ app.get('/reviews/add/:text/:rating/:username/:restaurant', function(req, res) {
 		else{
 			var reviewData = {
 				text: req.params.text,
-				rating: req.params.rating,
-				username: req.params.username,
+				author: req.params.author,
+				name: req.params.name,
 				restaurant: req.params.restaurant
 			};
 			var newReview = new Review(reviewData);
@@ -312,6 +312,25 @@ app.get('/checkUser', function(req, res){
 			res.send(JSON.stringify(user));
 		}
 	})
+});
+
+app.get('/restaurantinfo/:restaurantID', function(req, res){
+	var restaruantID = mongoose.mongo.ObjectID(req.params.restaruantID);
+	Restaurant.findOne({_id: restaruantID}, function(err, restaurant){
+		if(err){
+			return handleError(err);
+		}
+		if(restaurant == null){
+			res.send("Restaurant not found.");
+		}
+		else{
+			res.send(JSON.stringify(restaurant));
+		}
+	});
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/master
 });
 
 //To connect to MongoDB's  database
@@ -354,8 +373,8 @@ var RestaurantManagerPerms = mongoose.Schema({
 
 var ReviewSchema = mongoose.Schema({
 	text: String,
-	rating: Number,
-	username: String,
+	author: String,
+	name: String,
 	restaurant: String
 });
 

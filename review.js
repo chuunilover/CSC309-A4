@@ -6,7 +6,7 @@ var restaurantName = ;
 var restaurantID = ;
 
 //Get username of logged in account
-var username = ;
+var username = user.username;
 
 var rating;
 
@@ -27,7 +27,7 @@ $(document).ready(function(){
         rating = this.value;
         alert(rating);
     }); 
-});
+})
     
 $("#submit").click(function(){
     var review = document.getElementById("review").value;
