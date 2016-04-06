@@ -1,0 +1,27 @@
+body {
+	background-color:#eeeeee;
+}
+
+.jumbotron {
+	background-color:lightblue;
+	text-align:center;
+}
+
+h4 {
+	display: inline-block;
+}
+
+button {
+	margin-top:8px;
+	float: right;
+}
+
+
+.col-sm-7 {
+	margin: 10px;
+	border: 2px solid lightblue;
+}
+
+.form-control {
+	visibility:hidden;
+}
