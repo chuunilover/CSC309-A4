@@ -38,14 +38,17 @@ function updatePage(restaurant){
 	$("#hours").html("Hours: " + restaurant.hours);
 }
 
+/*
 getRests();
 
 function getRests(){
+	var data = {email: "lolwut@lolwut.com", name: "lolcat"}
 	$.ajax({
 	    type: 'post',
-        url: "/getMyReservations",
+        url: "/updateUser",
 		datatype: "json",
 		processData: false,
+		data: "json=" + JSON.stringify(data),
 //		headers: {"Content-type": "application/x-www-form-urlencoded"},
 		async: true,
         success: function(responseText, status, jqXHR) {
@@ -55,4 +58,4 @@ function getRests(){
 			404: function() {alert("Couldn't make restaurant")}
 		}
 	});
-}
+}*/

@@ -140,6 +140,46 @@ app.post('/createRestaurant', function(req, res){
 	});
 });
 
+app.post('/updateUser', function(req, res){
+	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
+	User.findOne({_id: userID}, function(err, user){
+		if(err){
+			return handleError(err);
+		}
+		if (user == null){
+			res.send("Please log in.");
+		}
+		else{
+			var query = JSON.parse(req.body.json);
+			var name = query.name;
+			var email = query.email;
+			console.log("Attempting to update user info...");
+			if(name == "" || name == null){
+				User.findOneAndUpdate({_id: userID}, {email: email}, function(err, user){
+					if(err) {
+						return handleError(err);
+					}
+				});
+			}
+			else if(email == "" || email == null){
+				User.findOneAndUpdate({_id: userID}, {name: name}, function(err, user){
+					if(err) {
+						return handleError(err);
+					}
+				});
+			}
+			else{
+				User.findOneAndUpdate({_id: userID}, {name: name, email: email}, function(err, user){
+					if(err) {
+						return handleError(err);
+					}
+				});
+			}
+			res.send("Successfully updated profile!");
+		}
+	});
+});
+
 app.post('/getManagedRestaurants', function(req, res){
 	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
 	User.findOne({_id: userID}, function(err, user){
@@ -154,7 +194,33 @@ app.post('/getManagedRestaurants', function(req, res){
 				if(err){
 					return handleError(err);
 				}
-				res.send(JSON.stringify(restaurants));
+				if(restaurants.length == 0){
+					res.send("[]");
+					return;
+				}
+				else{
+					res.write("[")
+					var numRestsDone = 0;
+					for (var r in restaurants){
+						Restaurant.findOne({_id: ObjectID(restaurants[r].restaurant_id)}, function(err, rest){
+							if(err){
+								numRestsDone++;
+								return handleError(err);
+							}
+							if(rest != null){
+								res.write(JSON.stringify(rest));
+							}
+							numRestsDone++;
+							if(numRestsDone == restaurants.length){
+								res.write("]");
+								res.end("");
+							}
+							else{
+								res.write(",");
+							}
+						});
+					}
+				}
 			});
 		}
 	});
@@ -535,19 +601,19 @@ app.get('/addAdmin/:admin/:restID', function(req, res){
 });
 
 //Get profile details.
-app.get('/user/:userID', function(req, res){
+app.get('/user/:username', function(req, res){
 	console.log("getting user " + req.params.userID);
-	User.findOne({ '_id': mongoose.mongo.ObjectID(req.params.userID)}, 'username password', function (err, user) {
+	User.findOne({'username': req.params.username}, 'username name', function (err, user) {
 		if (err){
 			return handleError(err);
 		}
-		else if (user === null || users.password != password){
+		else if (user == null){
 			console.log("No such user.");
 			res.send("No such user.");
 			return;
 		}
 		else{
-			res.send(JSON.stringify(user));
+			res.send(JSON.stringify({name: user.name, username: user.username}));
 		}
 	})
 });
@@ -596,7 +662,7 @@ app.get('/reviews/add/:text/:author/:name/:restaurant', function(req, res) {
 
 app.get('/checkUser', function(req, res){
 	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
-	User.findOne({_id: userID}, function(err, user){
+	User.findOne({_id: userID}, "name email", function(err, user){
 		if(err){
 			return handleError(err);
 		}
@@ -604,7 +670,7 @@ app.get('/checkUser', function(req, res){
 			res.send("No user found.");
 		}
 		else{
-			res.send(JSON.stringify(user));
+			res.send(JSON.stringify({name: user.name, email: user.email}));
 		}
 	})
 });
@@ -623,6 +689,7 @@ app.get('/restaurantinfo/:restaurantID', function(req, res){
 	});
 });
 
+/*
 app.get('/users/update/:name/:email', function(req, res){
 	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
 	console.log("Attempting to update user info...");
@@ -637,7 +704,7 @@ app.get('/users/update/:name/:email', function(req, res){
 			res.send("info updated!");
 		}
 	});
-});
+});*/
 
 app.get('/restaurants/seats/:restaurantID', function(req, res){
 	Restaurant.findOne({_id: ObjectID(req.params.restaurantID)}, function(err, restaurant){
