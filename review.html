@@ -1,90 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    	<meta charset="utf-8">
-    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    	<meta name="viewport" content="width=device-width, initial-scale=1">
-    	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    	<meta name="description" content="">
-   	<meta name="author" content="">
+<!--Makes the page responsive-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+	<!--min jQuery source: https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
+	        Saved for offline access/testing.-->
+	<script src="jQuery.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<link href="bootstrap.min.css" rel="stylesheet">
-	<link href="review.css" rel="stylesheet">
-    <link href="review.js">
-
-
-</head>
-<body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container">
-        	<div class="navbar-header">
-          	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            	<span class="sr-only">Toggle navigation</span>
-            	<span class="icon-bar"></span>
-            	<span class="icon-bar"></span>
-            	<span class="icon-bar"></span>
-         	</button>
-          	<a class="navbar-brand" href="#">Restaurant Reserver</a>
-        	</div>
-        <div id="navbar" class="navbar-collapse collapse">
-          	<form class="navbar-form navbar-right">
-            	<div class="form-group">
-              		<input type="text" placeholder="User Name" class="form-control">
-            	</div>
-            	<div class="form-group">
-              		<input type="password" placeholder="Password" class="form-control">
-            	</div>
-            	<button type="submit" class="btn btn-success">Sign in</button>
-		<button type="submit" class="btn btn-success">Sign up</button>
-          	</form>
-        </div><!--/.navbar-collapse -->
-      	</div>
-</nav>
-
-<div class="jumbotron">
-      	<div class="container">
-        	<h1>Welcome Back!</h1>
-		<h2>How was your recent visit?</h2>
-            
-        <!--READ FROM THE SERVER-->
-        <h3 class="restaurant" id="nameRestaurant"></h3>
-             
-            
-        <form role="form" id="submit_review" method="post" action="/submit">
-            
-            <!--RATING-->
-            <div class="rating">
-            <span><input type="radio" name="rating" id="str5" value="5"><label for="str5"></label></span>
-            <span><input type="radio" name="rating" id="str4" value="4"><label for="str4"></label></span>
-            <span><input type="radio" name="rating" id="str3" value="3"><label for="str3"></label></span>
-            <span><input type="radio" name="rating" id="str2" value="2"><label for="str2"></label></span>
-            <span><input type="radio" name="rating" id="str1" value="1"><label for="str1"></label></span>
-            </div>
-            
-            
-
-            <br>
-            <br>
-            
-            <!-- TEXT BOX -->
-            <div class="textbox">    
-                <textarea class="form-control" rows="5" id="text" name="review_text" placeholder="Tell me how you felt about this restaurant."></textarea>
-            </div>
-            
-            <br>
-
-            <!--SUBMIT BUTTON-->
-            <div class="button">
-            <button type="submit" class="btn btn-default">Submit</button>
-            
-            </div>
-            
-        
-        </form>
-            
-            
-
-      	</div>
-</div>
+	<link rel="stylesheet" type="text/css" href="header.css">
+	<link rel="stylesheet" type="text/css" href="login.css">
+	<link rel="stylesheet" type="text/css" href="review.css">
+	
+	<!--Page head-->
+	
+	<head>
+		<title></title>
+	</head>	
+	
+	<!--Body-->
+	
+	<body style=" margin:0cm 0cm 0cm 0cm;" onresize="resizeSearchBar()">
+		
+		<!--Header banner-->
+		<!--Auto resizing of header is handled in headerbar.js-->
+		<!--Styling for the elements in the header is handled in header.css-->
+		<div id="header" class="banner">
+			Search for a restaurant:
+			<input type="text" id="searchbox" onkeypress="process_search(event)" placeholder="<Type a restaurant name here>"/>
+			<div id="loginbanner" class="right">
+				<a href="login.html" class="banner">Login</a> | <a href="help.html" class="banner">Help</a>
+			</div>
+		</div>
+		<!--Used to keep the fixed banner from ruining the styling of a page-->
+		<div id="antibanner"></div>
+	
+	<div class= "container">
+		<div class="jumbotron">
+			<h1>Review Submission</h1>
+		</div>
+		<div class="row">
+			<div class="col-sm-7">
+				<h4>Stars: </h4>
+				<select>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+				</select>
+				<h4>Review: </h4>
+				<textarea name="review" rows="10" cols="30"></textarea><br><br>
+				<button type="submit" class="btn btn-default">Submit</button><br><br>
+			</div>
+		</div>	
+	</div>
+</body>
 
 <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -96,4 +68,3 @@
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>
-
