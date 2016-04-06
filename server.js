@@ -316,7 +316,7 @@ app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(r
 app.get('/restaurant/seatinfo/:restaurantID/:time', function(req, res){
 	var time = new Date(parseInt(req.params.time));
 	var restaurantID = mongoose.mongo.ObjectID(req.params.restaurantID);
-	Reservation.find({restaurant: req.params.restaurantID}, 'seatID time', function (err, rest) {
+	Reservation.find({restaurant: req.params.restaurantID, time: {"$gt": parseInt(req.params.time) - 1000*60*90, "$lt": parseInt(req.params.time) + 1000*60*90}}, 'seatID time', function (err, rest) {
 		if (err){
 			//return handleError(err);
 			res.send(err);
@@ -324,13 +324,13 @@ app.get('/restaurant/seatinfo/:restaurantID/:time', function(req, res){
 		}
 		var seatsFree = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 		for (i = 0; i < rest.length; i++){
-			var timeDif = Math.abs(rest[i].time.getTime() - parseInt(req.params.time));
-			if(timeDif < (1000*60*90)){
+			//var timeDif = Math.abs(rest[i].time.getTime() - parseInt(req.params.time));
+			//if(timeDif < (1000*60*90)){
 				var idxToRemove = getIndexOf(seatsFree, rest[i].seatID);
 				if(idxToRemove != -1){
 					seatsFree.splice(idxToRemove, 1);
 				}
-			}
+			//}
 		}
 		res.send(seatsFree.toString());
 	});
