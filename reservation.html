@@ -1,16 +1,49 @@
 <!DOCTYPE html>
 <html><head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+<link href="bootstrap.min.css" rel="stylesheet">
 <meta http-equiv="content-type" content="text/html; charset=windows-1252">
 
 <link rel="stylesheet" href="datepicker.css">
 <link rel="stylesheet" href="bootstrap.min.css">
 </head>
 <body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+        	<div class="navbar-header">
+          	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            	<span class="sr-only">Toggle navigation</span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+         	</button>
+          	<a class="navbar-brand" href="#">Restaurant Reserver</a>
+        	</div>
+        <div id="navbar" class="navbar-collapse collapse">
+          	<form class="navbar-form navbar-right">
+            	<div class="form-group">
+              		<input type="text" placeholder="User Name" class="form-control">
+            	</div>
+            	<div class="form-group">
+              		<input type="password" placeholder="Password" class="form-control">
+            	</div>
+            	<button type="submit" class="btn btn-success">Sign in</button>
+		<button type="submit" class="btn btn-success">Sign up</button>
+          	</form>
+        </div><!--/.navbar-collapse -->
+      	</div>
+</nav>
+<br><br><br><br>
 <div id="menu">
     <script src="jQuery.js"></script>
     <script src="bootstrap-datepicker.js"></script>
 	Pick a date: <input type="text"id="datepicker" readonly="readonly"></input>
-	<div id="timepicker">
+	<br><br><div id="timepicker">
 	<p>Pick a Time:</p>
 	<select name="time" id="time">
 	<option value="16:00">4:00</option>
@@ -39,7 +72,18 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 
 
 <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body></html>
->
+
+
 <!-- Load jQuery from Google's CDN -->
 <!-- Load jQuery UI CSS  -->
 <script src="reservation_files/reservation.js"></script>
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
