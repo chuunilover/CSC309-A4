@@ -88,6 +88,51 @@ app.post('/', function(req, res){
 	console.log(req.body);
 });
 
+app.post('/createRestaurant', function(req, res){
+	if (req.cookies.userID == null){
+		res.send("Please log in.");
+		return;
+	}
+	var query = JSON.parse(req.body.json);
+	var name = query.name;
+	var location = query.location;
+	var description = query.description;
+	var tags = query.tags;
+	var hours = query.hours;
+	var restaurantData = {
+		"name": name,
+		"location": location,
+		"description": description,
+		"tags": tags,
+		"hours": hours,
+		"seats": [4, 14, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,4 ]
+	};
+
+	console.log("added a restaurant...");
+	
+	var newRestaurant = new Restaurant(restaurantData);
+	newRestaurant.save(function(error, data){
+		if(error){
+			console.log("Failed to make restaurant");
+			res.send("Error creating new restaurant");
+		}
+		else{
+			var adminData = {
+				restaurant_id: data._id.toString(),
+				user: req.cookies.userID
+			}
+			var newAdmin = new Admin(adminData);
+			newAdmin.save(function(error, data){
+				if (error){
+					console.log(error);
+				}
+			});
+			console.log("Created new restaurant!")
+			res.send("Restaurant logged!");
+		}
+	});
+});
+
 //By default, / should return the login page. If logged in, profile page is returned.
 app.get('/', function(req, res) {
 	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
@@ -379,14 +424,28 @@ app.get('/restaurant/reserve/:restaurantID/:seatID/:time', function(req, res){
 	};
 
 	var newReservation = new Reservation(reservationData);
-	newReservation.save(function(error, data){
-		if(error){
-			res.send("Error creating new reservation.");
+	
+	Reservation.findOne({restaurant: req.params.restaurantID, seatID: req.params.seatID, time: {"$gt": parseInt(req.params.time) - 1000*60*90, "$lt": parseInt(req.params.time) + 1000*60*90}}, 'seatID time', function (err, reservation) {
+		if (err){
+			//return handleError(err);
+			res.send(err);
+			return;
+		}
+		if(reservation == null){
+			newReservation.save(function(error, data){
+				if(error){
+					res.send("Error creating new reservation.");
+				}
+				else{
+					res.send("Reservation created!");
+				}
+			});
 		}
 		else{
-			res.send("Reservation created!");
+			res.send("Sorry, this seat has been taken.");
 		}
 	});
+
 });
 
 function getIndexOf(array, value){

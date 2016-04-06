@@ -1,35 +1,44 @@
 <!DOCTYPE html>
 <html>
-<body>
+	<head>
+		<title>
+		Create your own restaurant!
+		</title>
+	</head>
+	<!--min jQuery source: https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
+	        Saved for offline access/testing.-->
+	<script src="jQuery.js"></script>
+	<body>
+		<form id="restaurantform">
+			Restaurant Name:<br><input type="text" name="name">
+			<br>
+			<br>
+			Location:<br><input type="text" name="location">
+			<br>
+			<br>
+			Description:<br><textarea name="description" rows="10" cols="30"></textarea>
+			<br>
+			<br>
+			Tags: <input onclick="help()" type="button" value="Learn more!"><br><input type="text" name="tags">
+			<br>
+			<br>
+			What are your restaurants hours?<br><input type="text" name="hours">
+			<br>
+			<br>
+			How many tables does your restaurant have? <br><input type="text" name="tables">
+			<br>
+			<br>
+			What is the maximum amount of people that can sit at a table?<br><input type="text" name="seats">
+			<br>
+			<br>
+			<input type="submit" value="Submit">
+		</form>
+	</body>
+	<script>
+		function help() {
+			alert("Tags are used to make searching for your restaurant easier for customers. Enter different keywords that can be used to identify your restaurant. Use a space to seperate each tag.");
+		}
+	</script>
+	<script src="restaurantcreation.js"></script>
 
-<form>
-	Restaurant Name:<br><input type="text" name="name">
-  	<br>
-	<br>
-  	Location:<br><input type="text" name="location">
-	<br>
-	<br>
-	Description:<br><textarea name="description" rows="10" cols="30"></textarea>
-	<br>
-	<br>
-	Tags: <input onclick="help()" type="button" value="Learn more!"><br><input type="text" name="tags">
-	<br>
-	<br>
-	What are your restaurants hours?<br><input type="text" name="hours">
-	<br>
-	<br>
-	How many tables does your restaurant have? <br><input type="text" name="tables">
-	<br>
-	<br>
-	What is the maximum amount of people that can sit at a table?<br><input type="text" name="seats">
-	<br>
-	<br>
-	<input type="submit" value="Submit">
-</form>
-</body>
-<script>
-	function help() {
-		alert("Tags are used to make searching for your restaurant easier for customers. Enter different keywords that can be used to identify your restaurant. Use a space to seperate each tag.");
-	}
-</script>
-
+</html>
