@@ -9,13 +9,16 @@ var bcrypt = require('bcrypt-nodejs');
 var app = express();
 var passport = require('passport');
 var ObjectID = require('mongodb').ObjectID;
-var LocalStrategy = require('passport-local').Strategy
+var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+var configAuth = require('./facebook');
 
 app.use(bodyParser()); 
 app.use(passport.initialize());
 
 app.use(express.static(__dirname));
 app.use(cookieParser());
+
 
 /**********************************************************************************
 ALL GET REQUESTS ARE PROCESSED BELOW.
@@ -55,6 +58,30 @@ ALL GET REQUESTS ARE PROCESSED BELOW.
 // 			}
 // 		});
 // 	}));
+
+// // serializes user
+// passport.serializeUser(function(user, done) {
+//         done(null, user.id);
+// });
+
+// // deserializes user
+// passport.deserializeUser(function(id, done) {
+//         User.findById(id, function(err, user) {
+//             done(err, user);
+// });
+
+// passport.use(new FacebookStrategy({
+// 	// data from our file
+// 	appID: configAuth.facebookAuth.appID,
+// 	appSecret: configAuth.facebookAuth.appSecret,
+// 	callbackUrl: configAuth.facebookAuth.callbackUrl
+
+// },
+// 	// facebook sends profile and token
+// 	function(token, refreshToken, profile, done) {
+// 		User.findOne
+// 	}
+// ));
 
 app.post('/', function(req, res){
 	console.log(req.body);
@@ -533,6 +560,8 @@ var ReservationSchema = mongoose.Schema({
 	user: String,
 	time: Date
 });
+
+/*Facebook authentication*/
 
 var Restaurant = mongoose.model('Restaurants', RestaurantSchema);
 var User = mongoose.model('Users', UserSchema);
