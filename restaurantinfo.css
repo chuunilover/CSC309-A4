@@ -1,4 +1,12 @@
 /* CSS for the restaurant info */
+body {
+	background-color:#eeeeee;
+}
+
+.jumbotron {
+	background-color:lightblue;
+	text-align:center;
+}
 
 #results{
 	/* image credits: https://www.helpgoabroad.com/blog/decoding-dim-sum/ */
@@ -21,13 +29,24 @@
 }
 
 #reviewStyle {
-	border: 2px solid #33FF00;
+	border: 2px solid lightblue;
 	border-radius: 25px;
 	padding: 10px 10px 10px 10px;
 }
 
 #individReviews {
-	border: 2px solid #CC6600;
+	border: 2px solid lightblue;
 	border-radius: 25px;
 	padding: 10px 10px 10px 10px;
 }
+
+.col-sm-5{
+	margin: 10px;
+	border: 2px solid lightblue;
+}
+
+.button {
+	margin-right: 20px;
+}
+
+
