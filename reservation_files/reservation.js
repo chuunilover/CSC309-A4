@@ -161,6 +161,7 @@ function drawRestaurant() {
 	drawCircle(605,646,10,'white', 'black'); 
 	
 	requestSearch();
+	requestSeatInfo();
 }
 
 
@@ -220,13 +221,42 @@ function requestReserve(tableNum) {
 	}
 }
 
+function requestSeatInfo() {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4 && xhttp.status == 200){
+			try{
+				var array = xhttp.responseText.split(",");
+				for(var idx in array){
+					if (idx < allTables.length){
+						draw_text(allTables[idx].x, allTables[idx].y, array[idx])
+					}
+				}
+			}
+			catch(e){
+				alert(e);
+			}
+		}
+		if (xhttp.readyState == 4 && xhttp.status == 404){
+			//alert("Failed to retrieve seat info.");
+		}
+	};
+	try{
+		new Date(currentDateString).getTime()
+		xhttp.open("GET", "http://localhost:3000/restaurants/seats/" + restID, true);
+		xhttp.send(null);
+	}
+	catch(e){
+		alert(e);
+	}
+}
+
 function requestSearch () {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (xhttp.readyState == 4 && xhttp.status == 200){
 			try{
 				var restaurants = JSON.parse('[' + xhttp.responseText + ']');
-				alert(xhttp.responseText);
 				draw_free_tables(restaurants)
 			}
 			catch(e){
@@ -275,4 +305,10 @@ function draw_circle_filled(x, y, rad, incolor, outcolor) {
     context.lineWidth = rad/2;
     context.strokeStyle = outcolor;
     context.stroke();
+}
+
+function draw_text(x, y, num){
+	context.fillStyle = 'black';
+	context.font = "30px Arial";
+	context.fillText(num.toString(), x - 10, y + 10);
 }

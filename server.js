@@ -8,7 +8,8 @@ var fs = require('fs');
 var bcrypt = require('bcrypt-nodejs');
 var app = express();
 var passport = require('passport');
-var ObjectID = require('mongodb').ObjectID;
+var mongo = require('mongodb');
+var ObjectID = mongo.ObjectID;
 var LocalStrategy = require('passport-local').Strategy
 
 app.use(bodyParser()); 
@@ -279,7 +280,7 @@ app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(r
 		"description": description,
 		"tags": tags,
 		"hours": hours,
-		"seats": [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,4 ]
+		"seats": [4, 14, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,4 ]
 	};
 
 	console.log("added a restaurant...");
@@ -327,10 +328,7 @@ app.get('/restaurant/reserve/:restaurantID/:seatID/:time', function(req, res){
 		res.send("Please log in.")
 		return;
 	}
-	console.log(parseInt(req.params.time))
 	var newdate = new Date(parseInt(req.params.time))
-	console.log(newdate);
-	console.log(newdate.getTime())
 	var reservationData = {
 		"restaurant": req.params.restaurantID,
 		"seatID": req.params.seatID,
@@ -466,6 +464,20 @@ app.get('/users/update/:name/:email', function(req, res){
 		}
 		else{
 			res.send("info updated!");
+		}
+	});
+});
+
+app.get('/restaurants/seats/:restaurantID', function(req, res){
+	Restaurant.findOne({_id: ObjectID(req.params.restaurantID)}, function(err, restaurant){
+		if(err){
+			return handleError(err);
+		}
+		if(restaurant == null){
+			res.send("Restaurant not found.");
+		}
+		else{
+			res.send(restaurant.seats.toString());
 		}
 	});
 });
