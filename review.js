@@ -2,7 +2,7 @@
 <script type="text/javascript">   
     
 //Read in name of restaurant     
-var restaurantName = localStorage.getItem(restaurant);   
+var restaurantName = restaurant.name;
 
 //Get username of logged in account
 var username = user.username;

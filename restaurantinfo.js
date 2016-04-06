@@ -2,6 +2,10 @@ var search_terms = /[^\?]*$/;
 var query = $(location).attr('href').match(search_terms)[0]
 requestSearch();
 
+$("#writeReview").click(function(){
+	window.open("review.html?" + query, "_self");
+});
+
 $("#reserveTable").click(function(){
 	window.open("reservation.html?" + query, "_self");
 });
