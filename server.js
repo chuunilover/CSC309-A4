@@ -71,7 +71,7 @@ ALL GET REQUESTS ARE PROCESSED BELOW.
 //             done(err, user);
 // });
 
-// passport.use(new FacebookStrategy({
+// passport.use(new FacebookStrategy({ // idea gained from https://scotch.io/tutorials/easy-node-authentication-facebook
 // 	// data from our file
 // 	appID: configAuth.facebookAuth.appID,
 // 	appSecret: configAuth.facebookAuth.appSecret,
@@ -556,13 +556,13 @@ var UserSchema = mongoose.Schema({
 	password: String
 });
 
-// generates a hash for the password for userSchema
+// generates a hash for the password for userSchema, idea from https://www.npmjs.com/package/bcryptjs
 UserSchema.methods.generateHash = function(password) {
 	console.log("password encrypted");
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
-// check that password is valid
+// check that password is valid, idea from https://www.npmjs.com/package/bcryptjs
 UserSchema.methods.validPassword = function(password) {
 	console.log("validating password");
 	return bcrypt.compareSync(password, this.password);
