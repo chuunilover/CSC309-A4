@@ -30,7 +30,7 @@ function requestLogin (username, password) {
 		}
 	};
 	try{
-		xhttp.open("GET", "http://localhost:3000/login/" + username + "/" + password, true);
+		xhttp.open("GET", "/login/" + username + "/" + password, true);
 		xhttp.send(null);
 	}
 	catch(e){
