@@ -59,6 +59,7 @@ function validateForm(name, location, description, tags, hours, numTables, maxSe
         //data: {id:'test', id2:values['test1'], id3:values['test2'], id4:values['test3']},
         success: function(responseText, status, jqXHR) {
             alert(responseText);
+			window.open("/", "_self")
 		},
 		statusCode: {
 			404: function() {alert("Couldn't make restaurant")}

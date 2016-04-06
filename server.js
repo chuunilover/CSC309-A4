@@ -150,15 +150,15 @@ app.post('/getManagedRestaurants', function(req, res){
 			res.send("Please log in to create a restaurant.");
 		}
 		else{
-			Admins.find({owner: req.cookies.userID}, function(err, restaurants){
+			Admin.find({owner: req.cookies.userID}, function(err, restaurants){
 				if(err){
 					return handleError(err);
 				}
 				res.send(JSON.stringify(restaurants));
-			}
+			});
 		}
 	});
-}
+});
 
 app.post('/getreservations', function(req, res){
 	var query = JSON.parse(req.body.json);
@@ -177,6 +177,24 @@ app.post('/getreservations', function(req, res){
 			return;
 		}
 		Reservation.find({restaurant: restID, time: {"$gte": time, "$lt": time + 86400000}}, function(err, reservations){
+			if(err){
+				return handleError(err);
+			}
+			res.send(JSON.stringify(reservations));
+		});
+	});
+});
+
+app.post('/getMyReservations', function(req, res){
+	User.findOne({_id: ObjectID(req.cookies.userID)}, function(err, user){
+		if(err){
+			return handleError(err);
+		}
+		if(user == null){
+			res.send("You do not have permissions to edit this restaurant.");
+			return;
+		}
+		Reservation.find({user: req.cookies.userID, time: {"$gte": new Date().getTime()}}, function(err, reservations){
 			if(err){
 				return handleError(err);
 			}

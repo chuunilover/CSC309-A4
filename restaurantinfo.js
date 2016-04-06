@@ -2,6 +2,10 @@ var search_terms = /[^\?]*$/;
 var query = $(location).attr('href').match(search_terms)[0]
 requestSearch();
 
+$("#reserveTable").click(function(){
+	window.open("reservation.html?" + query, "_self");
+});
+
 function requestSearch () {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
@@ -30,19 +34,18 @@ function requestSearch () {
 function updatePage(restaurant){
 	$("#restaurantName").html(restaurant.name);
 	$("#description").html(restaurant.description);
+	$("#location").html("Location: " + restaurant.location + "<br />");
+	$("#hours").html("Hours: " + restaurant.hours);
 }
-
 
 getRests();
 
 function getRests(){
-	//var data = {restaurantid: query, time: (new Date('5/4/2016')).getTime().toString()}
 	$.ajax({
 	    type: 'post',
-        url: "/getManagedRestaurants",
+        url: "/getMyReservations",
 		datatype: "json",
 		processData: false,
-		data: "json=" + JSON.stringify(data),
 //		headers: {"Content-type": "application/x-www-form-urlencoded"},
 		async: true,
         success: function(responseText, status, jqXHR) {
