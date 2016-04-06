@@ -284,6 +284,7 @@ function draw_free_tables(freeTables){
 			draw_circle_filled(allTables[k].x, allTables[k].y, 40, 'green', 'green');
 		}
 		else{
+			allTables[k].reserved = true;
 			draw_circle_filled(allTables[k].x, allTables[k].y, 40, 'red', 'red');
 		}
 	}

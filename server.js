@@ -251,6 +251,80 @@ app.post('/getreservations', function(req, res){
 	});
 });
 
+app.post('/addAdmin', function(req, res){
+	var query = JSON.parse(req.body.json);
+	var adminID = query.id;
+	var restID = query.restID;
+	Admin.findOne({owner: req.cookies.userID, restaurant_id: restID}, function(err, rest){
+		if(err){
+			return handleError(err);
+		}
+		if(rest == null){
+			res.send("You do not have permissions to edit this restaurant.");
+			return;
+		}
+		if (req.cookies.userID == null){
+			res.send("Please log in.");
+			return;
+		}
+		Restaurant.findOne({_id: ObjectID(query.restaurantID)}, 
+				function(err, restaurant){
+			if(err){
+				return handleError(err);
+			}
+			User.findOne({username: adminID}, function(err, user){
+				if(err){
+					return handleError(err);
+				}
+				if(user == null){
+					res.send("User does not exist.");
+				}
+				var newAdmininfo = {restaurant_id: restID,
+					owner: user._id
+				}
+				newAdmin = new Admin(newAdmininfo);
+				newAdmin.save(function(error, data){
+					if (error){
+						console.log(error);
+					}
+					res.send("Added admin!");
+				});
+			});
+		});
+	});
+});
+
+app.post('/updateRestaurant', function(req, res){
+	var query = JSON.parse(req.body.json);
+	var name = query.name;
+	var location = query.location;
+	var description = query.description;
+	var tags = query.tags;
+	var hours = query.hours;
+	var restID = query.restaurantID;
+	Admin.findOne({owner: req.cookies.userID, restaurant_id: restID}, function(err, rest){
+		if(err){
+			return handleError(err);
+		}
+		if(rest == null){
+			res.send("You do not have permissions to edit this restaurant.");
+			return;
+		}
+		if (req.cookies.userID == null){
+			res.send("Please log in.");
+			return;
+		}
+		Restaurant.findOneAndUpdate({_id: ObjectID(query.restaurantID)}, 
+			{name: name, location: location, description: description, tags: tags, hours: hours}, 
+				function(err, restaurant){
+			if(err){
+				return handleError(err);
+			}
+			res.send("Successfully updated restaurant info!");
+		});
+	});
+});
+
 app.post('/getMyReservations', function(req, res){
 	User.findOne({_id: ObjectID(req.cookies.userID)}, function(err, user){
 		if(err){
@@ -688,23 +762,6 @@ app.get('/restaurantinfo/:restaurantID', function(req, res){
 		}
 	});
 });
-
-/*
-app.get('/users/update/:name/:email', function(req, res){
-	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
-	console.log("Attempting to update user info...");
-	User.findOneAndUpdate({_id: userID}, {name: req.params.name, email: req.params.email}, function(err, user){
-		if(err) {
-			return handleError(err);
-		}
-		if(user == null){
-			res.send("You aren't logged in.");
-		}
-		else{
-			res.send("info updated!");
-		}
-	});
-});*/
 
 app.get('/restaurants/seats/:restaurantID', function(req, res){
 	Restaurant.findOne({_id: ObjectID(req.params.restaurantID)}, function(err, restaurant){

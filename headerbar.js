@@ -19,7 +19,7 @@ window.onload = function() {
 			try{
 			var user = JSON.parse(xhttp .responseText);
 				name_length = 350 + user.name.length * 10 + 80;
-				$("#loginbanner").html("Welcome, <a href='/profile.html'>" + user.name + '</a> | <button class="logout" onclick=logout()>Logout</button> | <a href="help.html" class="banner">Help</a>')
+				$("#loginbanner").html("Welcome, <a href='/profile.html'>" + user.name + '</a> | <inline onclick=logout()>Logout</inline> | <a href="help.html" class="banner">Help</a>')
 				resizeSearchBar();
 				$(".banner").css("visibility"," visible");
 			}

@@ -5,13 +5,10 @@
 	<!--min jQuery source: https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
 	        Saved for offline access/testing.-->
 	<script src="jQuery.js"></script>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 	<link href="bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="header.css">
 	<link rel="stylesheet" type="text/css" href="login.css">
-	<link rel="stylesheet" type="text/css" href="manageProfile.css">
 	
 	
 	<!--Page head-->
@@ -36,32 +33,21 @@
 		</div>
 		<!--Used to keep the fixed banner from ruining the styling of a page-->
 		<div id="antibanner"></div>
-	
-	<div class= "container">
+		
 		<div class="jumbotron">
-			<h1>Profile Management</h1>
-		</div>
-		<div class="row">
-			<div class="col-sm-7">
-				<h4>Current Name: </h4>
-				<button type="button" class="btn-default" id="showName">Change Name</button><br>
-				<div class="form-group">
-      					<input type="text" class="form-control" id="nameInput" />
-    				</div>
-				<h4>Current Email: </h4>
-				<button type="button" class="btn-default" id="showEmail">Change Email</button><br>
-				<div class="form-group">
-      					<input type="email" class="form-control" id="email" />
-    				</div>
-				<button type="submit" class="btn-default" style="float:left" id="update">Submit Changes</button><br><br>
+			<div class="container">
+				<!--h1 id="welcome-message">Welcome to Restaurant Reserver!</h1-->
+				<p>Here are the restaurants which you manage:</p>
 			</div>
-		</div>	
-	</div>
+			<div class="container" id="restlist">
+			</div>
+		</div>
+		
 	</body>
 	<!--JavaScript for the header (should use on all pages)-->
 	<script src="headerbar.js"></script>
 	<script src="profile.js"></script>
-	<script src="manageProfile.js"></script>
+	<script src="viewrestaurants.js"></script>
 	<!--JavaScript for the signup page-->
 	<!--Bootstrap stuff-->
 	<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
@@ -69,5 +55,3 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </html>
-
-
