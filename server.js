@@ -89,47 +89,94 @@ app.post('/', function(req, res){
 });
 
 app.post('/createRestaurant', function(req, res){
-	if (req.cookies.userID == null){
-		res.send("Please log in.");
-		return;
-	}
-	var query = JSON.parse(req.body.json);
-	var name = query.name;
-	var location = query.location;
-	var description = query.description;
-	var tags = query.tags;
-	var hours = query.hours;
-	var restaurantData = {
-		"name": name,
-		"location": location,
-		"description": description,
-		"tags": tags,
-		"hours": hours,
-		"seats": [4, 14, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,4 ]
-	};
-
-	console.log("added a restaurant...");
-	
-	var newRestaurant = new Restaurant(restaurantData);
-	newRestaurant.save(function(error, data){
-		if(error){
-			console.log("Failed to make restaurant");
-			res.send("Error creating new restaurant");
+	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
+	User.findOne({_id: userID}, function(err, user){
+		if(err){
+			return handleError(err);
+		}
+		if (user == null){
+			res.send("Please log in to create a restaurant.");
 		}
 		else{
-			var adminData = {
-				restaurant_id: data._id.toString(),
-				user: req.cookies.userID
-			}
-			var newAdmin = new Admin(adminData);
-			newAdmin.save(function(error, data){
-				if (error){
-					console.log(error);
+			var query = JSON.parse(req.body.json);
+			var name = query.name;
+			var location = query.location;
+			var description = query.description;
+			var tags = query.tags;
+			var hours = query.hours;
+			var restaurantData = {
+				"name": name,
+				"location": location,
+				"description": description,
+				"tags": tags,
+				"hours": hours,
+				"seats": [4, 14, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,4 ]
+			};
+
+			console.log("added a restaurant...");
+			
+			var newRestaurant = new Restaurant(restaurantData);
+			newRestaurant.save(function(error, data){
+				if(error){
+					console.log("Failed to make restaurant");
+					res.send("Error creating new restaurant");
+				}
+				else{
+					var adminData = {
+						restaurant_id: data._id.toString(),
+						owner: req.cookies.userID
+					}
+					var newAdmin = new Admin(adminData);
+					newAdmin.save(function(error, data){
+						if (error){
+							console.log(error);
+						}
+					});
+					console.log("Created new restaurant!")
+					res.send("Restaurant logged!");
 				}
 			});
-			console.log("Created new restaurant!")
-			res.send("Restaurant logged!");
+			}
+	});
+});
+
+app.post('/getManagedRestaurants', function(req, res){
+	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
+	User.findOne({_id: userID}, function(err, user){
+		if(err){
+			return handleError(err);
 		}
+		if (user == null){
+			res.send("Please log in to create a restaurant.");
+		}
+		else{
+			//Admins.find({owner: req.cookies.userID}, 
+		}
+	});
+}
+
+app.post('/getreservations', function(req, res){
+	var query = JSON.parse(req.body.json);
+	var restID = query.restaurantid;
+	var time = parseInt(query.time);
+	Admin.findOne({owner: req.cookies.userID, restaurant_id: restID}, function(err, rest){
+		if(err){
+			return handleError(err);
+		}
+		if(rest == null){
+			res.send("You do not have permissions to edit this restaurant.");
+			return;
+		}
+		if (req.cookies.userID == null){
+			res.send("Please log in.");
+			return;
+		}
+		Reservation.find({restaurant: restID, time: {"$gte": time, "$lt": time + 86400000}}, function(err, reservations){
+			if(err){
+				return handleError(err);
+			}
+			res.send(JSON.stringify(reservations));
+		});
 	});
 });
 
@@ -340,6 +387,7 @@ function getTags(searchQuery, tagList){
 }
 
 //localhost:3000/restaurants/add/yum/home/swagger/food/never
+/*
 app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(req, res){
 	if (req.cookies.userID == null){
 		res.send("Please log in.")
@@ -382,7 +430,7 @@ app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(r
 			res.send("Restaurant logged!");
 		}
 	});
-});
+});*/
 
 //Check which seats are free at this time and restaurant.
 app.get('/restaurant/seatinfo/:restaurantID/:time', function(req, res){
@@ -640,6 +688,7 @@ var ReviewSchema = mongoose.Schema({
 });
 
 var ReservationSchema = mongoose.Schema({
+	//restaurantID
 	restaurant: String,
 	seatID: Number,
 	user: String,

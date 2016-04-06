@@ -31,3 +31,24 @@ function updatePage(restaurant){
 	$("#restaurantName").html(restaurant.name);
 	$("#description").html(restaurant.description);
 }
+
+getRests();
+
+function getRests(){
+	var data = {restaurantid: query, time: (new Date('5/4/2016')).getTime().toString()}
+	$.ajax({
+	    type: 'post',
+        url: "/getreservations",
+		datatype: "json",
+		processData: false,
+		data: "json=" + JSON.stringify(data),
+//		headers: {"Content-type": "application/x-www-form-urlencoded"},
+		async: true,
+        success: function(responseText, status, jqXHR) {
+            alert(responseText);
+		},
+		statusCode: {
+			404: function() {alert("Couldn't make restaurant")}
+		}
+	});
+}

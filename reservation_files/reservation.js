@@ -215,7 +215,7 @@ function requestReserve(tableNum) {
 	};
 	try{
 		new Date(currentDateString).getTime()
-		xhttp.open("GET", "http://localhost:3000/restaurant/reserve/" + restID + "/" + tableNum.toString() + "/" + new Date(currentDateString).getTime(), true);
+		xhttp.open("GET", "/restaurant/reserve/" + restID + "/" + tableNum.toString() + "/" + new Date(currentDateString).getTime(), true);
 		xhttp.send(null);
 	}
 	catch(e){
@@ -242,7 +242,7 @@ function requestSeatInfo() {
 	};
 	try{
 		new Date(currentDateString).getTime()
-		xhttp.open("GET", "http://localhost:3000/restaurants/seats/" + restID, true);
+		xhttp.open("GET", "/restaurants/seats/" + restID, true);
 		xhttp.send(null);
 	}
 	catch(e){
@@ -269,7 +269,7 @@ function requestSearch () {
 	};
 	try{
 		new Date(currentDateString).getTime()
-		xhttp.open("GET", "http://localhost:3000/restaurant/seatinfo/" + restID + "/" + new Date(currentDateString).getTime(), true);
+		xhttp.open("GET", "/restaurant/seatinfo/" + restID + "/" + new Date(currentDateString).getTime(), true);
 		xhttp.send(null);
 	}
 	catch(e){

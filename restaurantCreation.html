@@ -1,44 +1,99 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>
-		Create your own restaurant!
-		</title>
-	</head>
-	<!--min jQuery source: https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
-	        Saved for offline access/testing.-->
-	<script src="jQuery.js"></script>
-	<body>
-		<form id="restaurantform">
-			Restaurant Name:<br><input type="text" name="name">
-			<br>
-			<br>
-			Location:<br><input type="text" name="location">
-			<br>
-			<br>
-			Description:<br><textarea name="description" rows="10" cols="30"></textarea>
-			<br>
-			<br>
-			Tags: <input onclick="help()" type="button" value="Learn more!"><br><input type="text" name="tags">
-			<br>
-			<br>
-			What are your restaurants hours?<br><input type="text" name="hours">
-			<br>
-			<br>
-			How many tables does your restaurant have? <br><input type="text" name="tables">
-			<br>
-			<br>
-			What is the maximum amount of people that can sit at a table?<br><input type="text" name="seats">
-			<br>
-			<br>
-			<input type="submit" value="Submit">
-		</form>
-	</body>
-	<script>
-		function help() {
-			alert("Tags are used to make searching for your restaurant easier for customers. Enter different keywords that can be used to identify your restaurant. Use a space to seperate each tag.");
-		}
-	</script>
-	<script src="restaurantcreation.js"></script>
+<html lang="en">
+<head>
+    	<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    	<meta name="description" content="">
+   	<meta name="author" content="">
+	<link href="bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+        	<div class="navbar-header">
+          	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            	<span class="sr-only">Toggle navigation</span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+         	</button>
+          	<a class="navbar-brand" href="#">Restaurant Reserver</a>
+        	</div>
+        <div id="navbar" class="navbar-collapse collapse">
+          	<form class="navbar-form navbar-right">
+            	<div class="form-group">
+              		<input type="text" placeholder="User Name" class="form-control">
+            	</div>
+            	<div class="form-group">
+              		<input type="password" placeholder="Password" class="form-control">
+            	</div>
+            	<button type="submit" class="btn btn-success">Sign in</button>
+		<button type="submit" class="btn btn-success">Sign up</button>
+          	</form>
+        </div><!--/.navbar-collapse -->
+      	</div>
+</nav>
 
+<div class="container">
+	<br><br><br>
+	<h2>Restaurant Form</h2>
+  	<form role="form" id="restaurantform">
+    	<div class="form-group">
+      		<label for="restaurant">Restaurant Name:</label>
+      		<input type="name" class="form-control" id="name">
+    	</div>
+    	<div class="form-group">
+      		<label for="location">Location:</label>
+      		<input type="location" class="form-control" id="location">
+    	</div>
+	<div class="form-group">
+      		<label for="Description">Description:</label>
+      		<input type="description" class="form-control" id="description">
+    	</div>
+	<div class="form-group">
+      		<label for="tags">Tags:
+		<button type="help" onclick= "help()" class="btn btn-default btn-sm">
+          	<span class="glyphicon glyphicon-question-sign"></span> Learn more!
+        	</button>
+		</label>
+      		<input type="tags" class="form-control" id="tags">
+    	</div>
+	<div class="form-group">
+      		<label for="hours">What are your restaurants hours?:</label>
+      		<input type="hours" class="form-control" id="hours">
+    	</div>
+	<div class="form-group">
+      		<label for="tables">How many tables does your restaurant have?</label>
+      		<input type="tables" class="form-control" id="tables">
+    	</div>
+	<div class="form-group">
+      		<label for="seats">What is the maximum amount of people that can sit at a table?</label>
+      		<input type="seats" class="form-control" id="seats">
+    	</div>
+    	<button type="submit" class="btn btn-default">Submit</button>
+  	</form>
+</div>
+
+<script>
+	function help() {
+		alert("Tags are used to make searching for your restaurant easier for customers. Enter different keywords that can be used to identify your restaurant. Use a space to seperate each tag.");
+	}
+</script>
+<script src="restaurantcreation.js"></script>
+
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
 </html>

@@ -8,13 +8,13 @@ xhttp.onreadystatchanged = function(){
     }
 };
 
-//http://localhost:3000/restaurants/add/yum/home/swagger/food/never
+///restaurants/add/yum/home/swagger/food/never
 try{
-	alert("http://localhost:3000/restaurants/add/" + $("#name").val() + "/"
+	alert("/restaurants/add/" + $("#name").val() + "/"
 					+ $("#location").val() + "/" + $("#description").val() + "/"
 					+ $("#location").val() + "/" + $("#tags").val() + "/" 
 					+ $("#hours").val());
-	xhttp.open("GET", "http://localhost:3000/restaurants/add/" + $("#name").val() + "/"
+	xhttp.open("GET", "/restaurants/add/" + $("#name").val() + "/"
 					+ $("#location").val() + "/" + $("#description").val() + "/"
 					+ $("#location").val() + "/" + $("#tags").val() + "/" 
 					+ $("#hours").val() , true);
@@ -35,7 +35,7 @@ $("#restaurantform").submit(function(event) {
 
 function stringNull(str){
 	return str == null || str == "";
-}	
+}
 
 
 function validateForm(name, location, description, tags, hours, numTables, maxSeat){
@@ -64,6 +64,4 @@ function validateForm(name, location, description, tags, hours, numTables, maxSe
 			404: function() {alert("Couldn't make restaurant")}
 		}
 	});
-	var l = 4;
 }
-

@@ -34,7 +34,7 @@ function requestSignup (username, name, email, password) {
 		}
 	};
 	try{
-		xhttp.open("GET", "http://localhost:3000/signup/" + username + "/" + name + "/" + email + "/" + password, true);
+		xhttp.open("GET", "/signup/" + username + "/" + name + "/" + email + "/" + password, true);
 		xhttp.send(null);
 	}
 	catch(e){

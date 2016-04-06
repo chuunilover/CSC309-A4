@@ -53,8 +53,8 @@ function updateReview (text, rating, username, restaurant){
 		}
 	};
 	try{
-		alert("http://localhost:3000/review/" + text + "/" + rating + "/" + username + "/" + restaurant);
-		xhttp.open("GET", "http://localhost:3000/review/" + text + "/" + rating + "/" + username + "/" + restaurant, true);
+		alert("/review/" + text + "/" + rating + "/" + username + "/" + restaurant);
+		xhttp.open("GET", "/review/" + text + "/" + rating + "/" + username + "/" + restaurant, true);
 		xhttp.send(null);
 	}
 	catch(e){

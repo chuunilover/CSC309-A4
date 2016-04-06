@@ -19,7 +19,7 @@ function requestSearch (keywords) {
 		}
 	};
 	try{
-		xhttp.open("GET", "http://localhost:3000/search/" + query, true);
+		xhttp.open("GET", "/search/" + query, true);
 		xhttp.send(null);
 	}
 	catch(e){

@@ -29,7 +29,7 @@ window.onload = function() {
 		}
 	}
 	try{
-		xhttp.open("GET", 'http://localhost:3000/checkUser/', true);
+		xhttp.open("GET", '/checkUser/', true);
 		xhttp.send(null);
 	}
 	catch(e){
