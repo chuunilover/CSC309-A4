@@ -150,7 +150,12 @@ app.post('/getManagedRestaurants', function(req, res){
 			res.send("Please log in to create a restaurant.");
 		}
 		else{
-			//Admins.find({owner: req.cookies.userID}, 
+			Admins.find({owner: req.cookies.userID}, function(err, restaurants){
+				if(err){
+					return handleError(err);
+				}
+				res.send(JSON.stringify(restaurants));
+			}
 		}
 	});
 }

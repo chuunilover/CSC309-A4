@@ -32,13 +32,14 @@ function updatePage(restaurant){
 	$("#description").html(restaurant.description);
 }
 
+
 getRests();
 
 function getRests(){
-	var data = {restaurantid: query, time: (new Date('5/4/2016')).getTime().toString()}
+	//var data = {restaurantid: query, time: (new Date('5/4/2016')).getTime().toString()}
 	$.ajax({
 	    type: 'post',
-        url: "/getreservations",
+        url: "/getManagedRestaurants",
 		datatype: "json",
 		processData: false,
 		data: "json=" + JSON.stringify(data),
