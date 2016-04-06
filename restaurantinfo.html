@@ -5,7 +5,9 @@
 	<!--min jQuery source: https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
 	        Saved for offline access/testing.-->
 	<script src="jQuery.js"></script>
-	
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="header.css">
 	<link rel="stylesheet" type="text/css" href="restaurantinfo.css">
     <link href="restaurantinfo.js">
@@ -34,24 +36,23 @@
 		<!--Used to keep the fixed banner from ruining the styling of a page-->
 		<div id="antibanner"></div>
 		
-		<div id="results">
-            
-			<h1 id="restaurantName">Yum Yum's</h1>
-			<img id="wrapText" src="dim-sum.jpg">
-			<b>About us: </b>
-			<inline id="description">Are you looking for great flavour without breaking the bank? Then come to Yum Yum's! Here at Yum Yum's, we serve the finest Chinese food on the University of Toronto campus, all while keeping the prices affordable. Are you a UofT student? We offer various discounts to students!<
-			<br /> <br />
-			Unlike a typical Western restaurant, Yum Yum's serves dishes to the table, rather than the individual, meaning that you can share and try as much food as you like! We even offer take-out. Just let us know what and roughly when you want your food, and it will be ready for you!</inline>
-			<br /><br />
-			<a href="menu.jpg">Click here to view the menu. (should show an image or pdf of the menu)</a>
-			<br /><br />
-			Additional info:<br />
-			Phone number: (416) 322-2222<br />
-			E-mail: food@yumyums.com <br />
-			Address: 22 St. George Streeet, Toronto, ON
-			<br /><br />
-            <button type="submit" id="writeReview" class="btn btn-default">Write review</button>
-            <br>
+		<div class = "container">
+			<div class = "jumbotron">
+				<h1>Yum Yum's</h1>
+			</div>
+			<div class="row">
+    				<div class="col-sm-5">
+					<h3>About us: </h3>
+					<p>Are you looking for great flavour without breaking the bank? Then come to Yum Yum's! Here at Yum Yum's, we serve the finest Chinese food on the University of Toronto 						campus, all while keeping the prices affordable. Are you a UofT student? We offer various discounts to students! Unlike a typical Western restaurant, Yum Yum's serves 						dishes to the table, rather than the individual, meaning that you can share and try as much food as you like! We even offer take-out. Just let us know what and roughly 					when you want your food, and it will be ready for you!</p>
+				</div>
+				<div class="col-sm-5">
+					<h3>Additional Info: </h3>
+					<h4>Location: 22 St. George Streeet, Toronto, ON<h4>
+					<h4>Hours: 4-9</h4>
+				</div>
+			
+			</div>
+			<button type="submit" id="writeReview" class="btn btn-default">Write review</button><button type="submit" id="reserveTable" class="btn btn-default">Reserve a table</button><br><br>
 			<div id="reviewStyle">
 				<h2>Reviews:</h2>
 				<div id="individReviews">
@@ -61,6 +62,7 @@
 					Rating: 4.3/5<br />
 					5 out of 6 people found this review helpful.
 				</div>
+				<br>
 				<div id="individReviews">
 					Posted by: Edd Moore (@mooree)<br />
 					The spring rolls are pretty great!
@@ -70,6 +72,7 @@
 				</div>
 			</div>
 		</div>
+	</body>
         
 		
  
