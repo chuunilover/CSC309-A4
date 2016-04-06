@@ -269,6 +269,10 @@ function getTags(searchQuery, tagList){
 
 //localhost:3000/restaurants/add/yum/home/swagger/food/never
 app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(req, res){
+	if (req.cookies.userID == null){
+		res.send("Please log in.")
+		return;
+	}
 	var name = req.params.name;
 	var location = req.params.location;
 	var description = req.params.description;
@@ -292,6 +296,16 @@ app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(r
 			res.send("Error creating new restaurant");
 		}
 		else{
+			var adminData = {
+				restaurant_id: data._id.toString(),
+				user: req.cookies.userID
+			}
+			var newAdmin = new Admin(adminData);
+			newAdmin.save(function(error, data){
+				if (error){
+					console.log(error);
+				}
+			});
 			console.log("Created new restaurant!")
 			res.send("Restaurant logged!");
 		}
@@ -528,7 +542,7 @@ UserSchema.methods.validPassword = function(password) {
 };
 
 var RestaurantManagerPerms = mongoose.Schema({
-	restaurant_id: Number,
+	restaurant_id: String,
 	owner: String
 });
 
@@ -550,6 +564,7 @@ var Restaurant = mongoose.model('Restaurants', RestaurantSchema);
 var User = mongoose.model('Users', UserSchema);
 var Review = mongoose.model('Reviews', ReviewSchema);
 var Reservation = mongoose.model('Reservations', ReservationSchema);
+var Admin = mongoose.model('Admins', RestaurantManagerPerms);
 
 
 //check if user exists
