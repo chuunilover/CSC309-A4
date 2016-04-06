@@ -12,6 +12,7 @@ var ObjectID = require('mongodb').ObjectID;
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var configAuth = require('./facebook');
+var mongo = require('mongodb');
 
 app.use(bodyParser()); 
 app.use(passport.initialize());
@@ -295,6 +296,10 @@ function getTags(searchQuery, tagList){
 
 //localhost:3000/restaurants/add/yum/home/swagger/food/never
 app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(req, res){
+	if (req.cookies.userID == null){
+		res.send("Please log in.")
+		return;
+	}
 	var name = req.params.name;
 	var location = req.params.location;
 	var description = req.params.description;
@@ -306,7 +311,7 @@ app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(r
 		"description": description,
 		"tags": tags,
 		"hours": hours,
-		"seats": [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,4 ]
+		"seats": [4, 14, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,4 ]
 	};
 
 	console.log("added a restaurant...");
@@ -318,6 +323,16 @@ app.get('/restaurants/add/:name/:location/:description/:tags/:hours', function(r
 			res.send("Error creating new restaurant");
 		}
 		else{
+			var adminData = {
+				restaurant_id: data._id.toString(),
+				user: req.cookies.userID
+			}
+			var newAdmin = new Admin(adminData);
+			newAdmin.save(function(error, data){
+				if (error){
+					console.log(error);
+				}
+			});
 			console.log("Created new restaurant!")
 			res.send("Restaurant logged!");
 		}
@@ -354,10 +369,7 @@ app.get('/restaurant/reserve/:restaurantID/:seatID/:time', function(req, res){
 		res.send("Please log in.")
 		return;
 	}
-	console.log(parseInt(req.params.time))
 	var newdate = new Date(parseInt(req.params.time))
-	console.log(newdate);
-	console.log(newdate.getTime())
 	var reservationData = {
 		"restaurant": req.params.restaurantID,
 		"seatID": req.params.seatID,
@@ -497,6 +509,20 @@ app.get('/users/update/:name/:email', function(req, res){
 	});
 });
 
+app.get('/restaurants/seats/:restaurantID', function(req, res){
+	Restaurant.findOne({_id: ObjectID(req.params.restaurantID)}, function(err, restaurant){
+		if(err){
+			return handleError(err);
+		}
+		if(restaurant == null){
+			res.send("Restaurant not found.");
+		}
+		else{
+			res.send(restaurant.seats.toString());
+		}
+	});
+});
+
 //To connect to MongoDB's  database
 mongoose.connect('mongodb://localhost', {
   user: '',
@@ -543,7 +569,7 @@ UserSchema.methods.validPassword = function(password) {
 };
 
 var RestaurantManagerPerms = mongoose.Schema({
-	restaurant_id: Number,
+	restaurant_id: String,
 	owner: String
 });
 
@@ -567,6 +593,7 @@ var Restaurant = mongoose.model('Restaurants', RestaurantSchema);
 var User = mongoose.model('Users', UserSchema);
 var Review = mongoose.model('Reviews', ReviewSchema);
 var Reservation = mongoose.model('Reservations', ReservationSchema);
+var Admin = mongoose.model('Admins', RestaurantManagerPerms);
 
 
 //check if user exists
