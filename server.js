@@ -88,6 +88,57 @@ app.post('/', function(req, res){
 	console.log(req.body);
 });
 
+app.post('/reviewRestaurant', function(req, res){
+	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
+	User.findOne({_id: userID}, function(err, user){
+		if(err){
+			return handleError(err);
+		}
+		if (user == null){
+			res.send("Please log in to review a restaurant.");
+		}
+		else{
+		/*	text: String,
+	author: String,
+	name: String,
+	restaurant: String
+	rating: number*/
+			var query = JSON.parse(req.body.json);
+			var name = user.name;
+			var username = user.username;
+			var restID = query.restID;
+			var text = query.reviewText;
+			var rating = parseInt(query.rating);
+			Reservation.count({user: req.cookies.userID, restaurant: restID}, function(err, count){
+				if (err){
+					return handleError(err);
+				}
+				if(count == 0){
+					res.send("Sorry, you must have reserved a table at and eaten at this restaurant in order to write a review.");	
+				}
+				else{
+					var reviewData = {
+						text: text,
+						author: username,
+						name: name,
+						restaurant: restID,
+						rating: rating
+					};
+					var newReview = new Review(reviewData);
+					newReview.save(function(error, data){
+						if(error){
+							res.send("Error submitting review.");
+						}
+						else{
+							res.send("Your review has been published!");
+						}
+					});
+				}
+			});
+		}
+	});
+});
+
 app.post('/createRestaurant', function(req, res){
 	var userID = mongoose.mongo.ObjectID(req.cookies.userID);
 	User.findOne({_id: userID}, function(err, user){
@@ -701,12 +752,14 @@ app.get('/reviews/:restaurantID', function(req, res) {
 		var result = []
 		for (var i in reviews){
 			result.push(JSON.stringify(reviews[i]));
+			console.log(reviews[i]);
 		}
 		res.send(result.toString());
 	});
 });
 
-app.get('/reviews/add/:text/:author/:name/:restaurant', function(req, res) {
+app.get('/reviews/add/:text/:name/:restaurant', function(req, res) {
+
 	Reservation.count({user: req.params.author, restaurant: req.params.restaurant}, function(err, count){
 		if (err){
 			return handleError(err);
@@ -831,7 +884,8 @@ var ReviewSchema = mongoose.Schema({
 	text: String,
 	author: String,
 	name: String,
-	restaurant: String
+	restaurant: String,
+	rating: Number
 });
 
 var ReservationSchema = mongoose.Schema({

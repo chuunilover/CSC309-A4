@@ -2,8 +2,6 @@ var restInfo = restInfo;
 var search_terms = /[^\?]*$/;
 var restID = $(location).attr('href').match(search_terms)[0]
 
-
-
 $.ajax({
 	type: 'get',
     url: '/restaurantinfo/' + restID,
