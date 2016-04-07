@@ -7,7 +7,21 @@ body {
 	text-align:center;
 }
 
-.col-sm-12 {
+h4 {
+	display: inline-block;
+}
+
+button {
+	margin-top:8px;
+	float: right;
+}
+
+
+.col-sm-7 {
 	margin: 10px;
 	border: 2px solid lightblue;
+}
+
+.form-control {
+	
 }

@@ -1,69 +1,29 @@
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js">
-<script type="text/javascript">   
-    
-//Read in name of restaurant     
-var restaurantName = restaurant.name;
+var search_terms = /[^\?]*$/;
+var query = $(location).attr('href').match(search_terms)[0]
 
-//Get username of logged in account
-var username = user.username;
-
-var rating;
-
-$(document).ready(function(){
-    document.getElementById("nameRestaurant").innerHTML = restaurantName;
-})
-
-$(document).ready(function(){
-//  Check Radio-box
-    $(".rating input:radio").attr("checked", false);
-    $('.rating input').click(function () {
-        $(".rating span").removeClass('checked');
-        $(this).parent().addClass('checked');
-    });
-
-    $('input:radio').change(
-    function(){
-        rating = this.value;
-        alert(rating);
-    }); 
-})
-    
 $("#submit").click(function(){
-    var review = document.getElementById("review").value;
-    
-	if (review == ""){
-		alert("Please write text review")
-	}
-	else if (rating == "") {
-		alert("Please rate this restaurant");
-	}
-	else{
-		alert("Submitted review for" + restaurantName);
-		updateReview(text, rating, username, restaurant);
-	}
-    window.history.back();
-})    
+	reviewText = $("textarea#review").val();
+	review(reviewText);
+});
 
 
-function updateReview (text, rating, username, restaurant){
-    var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if (xhttp.readyState == 4 && xhttp.status == 200){
-			alert(xhttp.responseText);
+function review(reviewContent){
+    var data = {rating: $("#rating").val(), reviewText: reviewContent, restID: query};
+	$.ajax({type: 'post',
+        url: "/reviewRestaurant",
+		datatype: "json",
+		processData: false,
+		data: "json=" + JSON.stringify(data),
+        headers: {"Content-type": "application/x-www-form-urlencoded"},
+		async: true,
+        success: function(responseText, status, jqXHR) {
+            alert(responseText);
+			//window.open("/", "_self");
+		},
+		statusCode: {
+			404: function() {alert("Failed to update information.")}
 		}
-	};
-	try{
-		alert("/review/" + text + "/" + rating + "/" + username + "/" + restaurant);
-		xhttp.open("GET", "/review/" + text + "/" + rating + "/" + username + "/" + restaurant, true);
-		xhttp.send(null);
-	}
-	catch(e){
-		alert(e);
-	}        
+	});
 }
-
-    
-
-
 
 
